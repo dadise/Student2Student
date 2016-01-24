@@ -1,4 +1,5 @@
 package com.example.student2student;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -14,6 +15,17 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 public class new_user extends AppCompatActivity {
+    EditText firstNameInput;
+    EditText lastNameInput;
+    EditText IDInput;
+    EditText emailInput;
+    CheckBox teach;
+    Spinner s;
+
+    String first, last, id, email, lob;
+    boolean toTeach;
+
+    Intent toWhichToTeachIntent, toWhichToLearnIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,55 +34,68 @@ public class new_user extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        firstNameInput = (EditText) findViewById(R.id.firstNameInput);
+        lastNameInput = (EditText) findViewById(R.id.lastnameInput);
+        IDInput = (EditText) findViewById(R.id.IDInput);
+        emailInput = (EditText) findViewById(R.id.e_mailInput);
+        s = (Spinner) findViewById(R.id.line_of_business);
+        teach = (CheckBox) findViewById(R.id.teatcingCheckBox);
+
+
     }
 
-    public void toWhichToTeach(View view)
-    {
-        Intent i = new Intent(this,which_to_teach.class);
-//        Intent si = new Intent(this,main.class);
+    public void toWhichToTeach(View view) {
 
-        final EditText firstNameInput = (EditText) findViewById(R.id.firstNameInput);
-        final EditText lastNameInput = (EditText) findViewById(R.id.lastnameInput);
-        final EditText IDInput = (EditText) findViewById(R.id.IDInput);
-        final EditText emailInput = (EditText) findViewById(R.id.e_mailInput);
-        final Spinner s = (Spinner) findViewById(R.id.line_of_business);
-        final CheckBox teach = (CheckBox) findViewById(R.id.teatcingCheckBox);
 
-        String first ,last , id , email , lob;
-        boolean toTeach;
+        if(firstNameInput.getText().toString().equals(""))
+        {
+            Toast.makeText(this,"you left some empty fields",Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            if(!teach.isChecked())
+            {
+                toWhichToTeachIntent = new Intent(this,which_to_teach.class);
+                put(toWhichToTeachIntent);
+                startActivity(toWhichToTeachIntent);
+
+            }
+            else
+
+            {
+                toWhichToLearnIntent = new Intent(this,which_to_learn.class);
+                put(toWhichToLearnIntent);
+                startActivity(toWhichToLearnIntent);
+
+            }
+
+        }
+    }
+
+    private void put(Intent i) {
         first = firstNameInput.getText().toString();
         last = lastNameInput.getText().toString();
         id = IDInput.getText().toString();
         email = emailInput.getText().toString();
         lob = s.getSelectedItem().toString();
-        if(teach.isChecked())
-            toTeach = true;
-        else
-            toTeach = false;
 
-        i.putExtra("first",first);
-        i.putExtra("last",last);
-        i.putExtra("id",id);
-        i.putExtra("email",email);
-        i.putExtra("line of business",lob);
-        i.putExtra("to teach" , toTeach);
+        first = first.trim();
+        last = last.trim();
+        id = id.trim();
+        email = email.trim();
+
+        i.putExtra("first", first);
+        i.putExtra("last", last);
+        i.putExtra("id", id);
+        i.putExtra("email", email);
+        i.putExtra("line of business", lob);
+        i.putExtra("to teach", toTeach);
 
 
-        Toast.makeText(this,"--"+first+"--",Toast.LENGTH_LONG).show();
-        if(first != "")
-        {
-            startActivity(i);
-        }
-        else
-        {
-            Toast.makeText(this,"you left some empty fields",Toast.LENGTH_LONG).show();
-//            startActivity(si);
-        }
     }
 
-    public void toMain(View view)
-    {
-        Intent i = new Intent(this,MainActivity.class);
+    public void toMain(View view) {
+        Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
 

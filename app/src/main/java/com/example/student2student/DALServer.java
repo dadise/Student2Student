@@ -36,13 +36,13 @@ public class DALServer extends AsyncTask<String,String,String>{
 
     @Override
     protected String doInBackground(String... params) {
-        Log.i("here","debugger");
-//        String occ= "תוכנה";
+
         String response = "";
 
         try
         {
             boolean running = true;
+            Log.i("here","aaaa");
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(DB_URL,USER,PASS);
 

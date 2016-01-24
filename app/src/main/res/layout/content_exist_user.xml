@@ -68,28 +68,28 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ok"
         android:id="@+id/ok_button"
+        android:text="ok"
         android:textColor="@color/red"
         android:background="@color/white"
-        android:onClick="toResult"
-        android:clickable="true"
-        android:layout_marginTop="92dp"
-        android:layout_below="@+id/forgotPasword"
-        android:layout_toLeftOf="@+id/headlineText"
-        android:layout_toStartOf="@+id/headlineText" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginLeft="40dp"
+        android:onClick="toResult"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="cancel"
         android:id="@+id/cancel_button"
+        android:text="cancel"
         android:textColor="@color/red"
         android:background="@color/white"
-        android:onClick="toMain"
-        android:layout_alignTop="@+id/ok_button"
-        android:layout_toLeftOf="@+id/imagePassword"
-        android:layout_toStartOf="@+id/imagePassword" />
+        android:layout_marginBottom="100dp"
+        android:layout_marginLeft="220dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:onClick="toMain"/>
 
     <TextView
         android:layout_width="wrap_content"

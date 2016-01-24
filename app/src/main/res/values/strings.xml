@@ -31,5 +31,7 @@
     </string-array>
     <string name="title_activity_which_to_teach">which_to_teach</string>
     <string name="forgot_password">Forgot password?</string>
+    <string name="title_activity_which_to_learn">which_to_learn</string>
+    <string name="title_activity_result">result</string>
 
 </resources>

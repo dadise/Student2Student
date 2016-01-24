@@ -1,18 +1,25 @@
 package com.example.student2student;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class which_to_teach extends AppCompatActivity {
 
 //    DALServer ds;
+    ArrayAdapter<String> adapter;
+    ListView listOfCourse;
+    ArrayList<String>  myItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,10 +27,10 @@ public class which_to_teach extends AppCompatActivity {
         setContentView(R.layout.activity_which_to_teach);
 
         Bundle data = getIntent().getExtras();
-        if(data == null)
+        if (data == null)
             return;
 
-        String first ,last , id , email , lob;
+        String first, last, id, email, lob;
         boolean toTeach;
         first = data.getString("first");
         last = data.getString("last");
@@ -35,11 +42,28 @@ public class which_to_teach extends AppCompatActivity {
 //        ds = new DALServer(this,this,getTaskId());
 //        ds.execute();
 
-        final TextView change = (TextView) findViewById(R.id.change);
-        change.setText("_"+first+"_"+last+"_"+id+"_"+email+"_"+toTeach+"_");
-        if(first == "" || last == "" || id == "" || email == "")
+        filTheList();
+
+        if(listOfCourse != null)
         {
-            Intent intent = new Intent(this,new_user.class);
+            final Context context = this;
+            listOfCourse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String item = myItems.get(position);
+                    Intent intent = new Intent(context,which_to_learn.class);
+                    intent.putExtra("item", item );
+                    startActivity(intent);
+
+                }
+            });
+        }
+
+
+        final TextView change = (TextView) findViewById(R.id.change);
+        change.setText("שלום לך " + first +" "+last);
+        if (first == "" || last == "" || id == "" || email == "") {
+            Intent intent = new Intent(this, new_user.class);
             startActivity(intent);
         }
 
@@ -49,6 +73,43 @@ public class which_to_teach extends AppCompatActivity {
 
     }
 
+    private void filTheList() {
+//        String[] myItem = {"אלגוריתמיקה", "הנדסת תוכנה", "חדוא 2"  , "חדוא 1" ,  "מבוא לחדוא" , "מתמטיקה בדידה 1" , "מתמטיקה בדידה 2" , "אלגברה ליניארית 1" , "אלגברה ליניארית 2" , "מיקרופרוססורים" , "תיכון מונחה עצמים" ,  "מערכות מבוזרות"};
+        this.myItems = new ArrayList<String>();
+        myItems.add(0,"אלגוריתמיקה");
+        myItems.add(1,"הנדסת תוכנה");
+        myItems.add(2,"מבוא לחדוא");
+        myItems.add(3,"חדוא 1");
+        myItems.add(4,"חדוא 2");
+        myItems.add(5,"מתמטיקה בדידה 1");
+        myItems.add(6,"מתמטיקה בדידה 2");
+        myItems.add(7,"אלגברה ליניארית 1");
+        myItems.add(8,"אלגברה ליניארית 2");
+        myItems.add(9,"מיקרופרוססורים");
+        myItems.add(10,"מערכות מבוזרות");
+        myItems.add(11,"תיכון מונחה עצמים");
+        myItems.add(12,"כלכלה");
+        myItems.add(13,"סגנונות מוזיקליים");
+
+        adapter = new ArrayAdapter<String>(this, R.layout.teachitems, myItems);
+
+        listOfCourse = (ListView) findViewById(R.id.listOfCourses);
+        listOfCourse.setAdapter(adapter);
+
+
+    }
+
+    public void toNewUser(View view)
+    {
+        Intent intent = new Intent(this,new_user.class);
+        startActivity(intent);
+    }
+
+    public void toWhichToLearn(View view)
+    {
+        Intent intent = new Intent(this,which_to_learn.class);
+        startActivity(intent);
+    }
 
 
 }

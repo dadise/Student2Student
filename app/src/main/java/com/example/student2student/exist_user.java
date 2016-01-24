@@ -25,10 +25,11 @@ public class exist_user extends AppCompatActivity {
         password = (EditText)findViewById(R.id.passwordEditText);
     }
 
-//    public void toResult(View view)
-//    {
-//
-//    }
+    public void toResult(View view)
+    {
+        Intent intent = new Intent(this,result.class);
+        startActivity(intent);
+    }
 
     public void toMain(View view)
     {
