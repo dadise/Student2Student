@@ -1,8 +1,10 @@
 package com.example.student2student;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -34,5 +36,18 @@ public class result extends AppCompatActivity {
 
 
     }
+
+    public void toWhichToTeach(View view)
+    {
+        Intent intent = new Intent(this,which_to_teach.class);
+        startActivity(intent);
+    }
+
+    public void toMain(View view)
+    {
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+    }
+
 
 }

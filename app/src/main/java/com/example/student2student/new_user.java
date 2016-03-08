@@ -14,13 +14,18 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.student2student.query_task.insert_student;
+
 public class new_user extends AppCompatActivity {
+
+    insert_student is;
     EditText firstNameInput;
     EditText lastNameInput;
     EditText IDInput;
     EditText emailInput;
     CheckBox teach;
     Spinner s;
+
 
     String first, last, id, email, lob;
     boolean toTeach;
@@ -47,13 +52,14 @@ public class new_user extends AppCompatActivity {
     public void toWhichToTeach(View view) {
 
 
-        if(firstNameInput.getText().toString().equals(""))
+        if(firstNameInput.getText().toString().equals("") || lastNameInput.getText().toString().equals("") ||
+                IDInput.getText().toString().equals("") || emailInput.getText().toString().equals(""))
         {
             Toast.makeText(this,"you left some empty fields",Toast.LENGTH_LONG).show();
         }
         else
         {
-            if(!teach.isChecked())
+            if(teach.isChecked())
             {
                 toWhichToTeachIntent = new Intent(this,which_to_teach.class);
                 put(toWhichToTeachIntent);

@@ -32,5 +32,33 @@
         android:layout_below="@+id/resultText"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="עדכן"
+        android:id="@+id/updateButton"
+        android:background="@color/white"
+        android:textColor="@color/red"
+        android:layout_toLeftOf="@+id/mainButton"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:onClick="toWhichToTeach"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="הבייתה"
+        android:id="@+id/mainButton"
+        android:background="@color/white"
+        android:textColor="@color/red"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="160dp"
+        android:onClick="toMain"/>
+
 
 </RelativeLayout>

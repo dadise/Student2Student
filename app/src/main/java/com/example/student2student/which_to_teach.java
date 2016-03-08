@@ -12,11 +12,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.student2student.query_task.insert_student;
+import com.example.student2student.query_task.QueryInterface;
+
 import java.util.ArrayList;
 
 public class which_to_teach extends AppCompatActivity {
 
-//    DALServer ds;
+    insert_student ds;
     ArrayAdapter<String> adapter;
     ListView listOfCourse;
     ArrayList<String>  myItems;
@@ -39,8 +42,9 @@ public class which_to_teach extends AppCompatActivity {
         lob = data.getString("line of business");
         toTeach = data.getBoolean("to teach");
 
-//        ds = new DALServer(this,this,getTaskId());
+//        ds = new insert_student(this,this,getTaskId());
 //        ds.execute();
+
 
         filTheList();
 
@@ -74,6 +78,22 @@ public class which_to_teach extends AppCompatActivity {
     }
 
     private void filTheList() {
+
+        ds = new insert_student(this,this,getTaskId());
+        QueryInterface callback = new QueryInterface() {
+            @Override
+            public void onSuccess(String response) {
+
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        };
+        ds.setCallback(callback);
+
+        ds.execute();
 //        String[] myItem = {"אלגוריתמיקה", "הנדסת תוכנה", "חדוא 2"  , "חדוא 1" ,  "מבוא לחדוא" , "מתמטיקה בדידה 1" , "מתמטיקה בדידה 2" , "אלגברה ליניארית 1" , "אלגברה ליניארית 2" , "מיקרופרוססורים" , "תיכון מונחה עצמים" ,  "מערכות מבוזרות"};
         this.myItems = new ArrayList<String>();
         myItems.add(0,"אלגוריתמיקה");
