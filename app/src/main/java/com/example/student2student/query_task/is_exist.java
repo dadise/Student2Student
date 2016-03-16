@@ -9,24 +9,22 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 
-
-public class import_list extends AsyncTask<String,String,ArrayList<String>> {
-
+public class is_exist extends AsyncTask<String,String,Boolean>
+{
     private final Activity activity;
     private final Context context;
     private int brenchid;
     public String query;
-    ArrayList<String> listOfCourses;
 
-    private ArraylistQueryInterface queryInterface;
+//    private ArraylistQueryInterface queryInterface;
 
     String DB_URL = "jdbc:mysql://a757fb85-09c9-49bc-8772-a58f008e58f6.mysql.sequelizer.com:3306/dba757fb8509c949bc8772a58f008e58f6";
     String USER = "bjqdlncpsginpfvs";
     String PASS = "BJeASLFDyGpkwA5dzbmJkWFsfwvF7KVGngwtuUhzXiS2q3oqspfHbpFMcUvuqaEW";
+    private BooleanQueryInterface stringQueryInterface;
 
-    public import_list(Activity activity, Context context, int brenchid)
+    public is_exist(Activity activity, Context context, int brenchid)
     {
 
         this.activity = activity;
@@ -37,24 +35,14 @@ public class import_list extends AsyncTask<String,String,ArrayList<String>> {
     }
 
     @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
+    protected Boolean doInBackground(String... params) {
 
-    }
-
-    public void setInterface(ArraylistQueryInterface queryInterface){
-        this.queryInterface = queryInterface;
-    }
-
-
-
-    @Override
-    protected ArrayList<String> doInBackground(String... params) {
-
-        listOfCourses = new ArrayList<String>();
+        String response = "";
+        boolean is = false;
 
         try
         {
+            boolean running = true;
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(DB_URL, USER, PASS);
 
@@ -68,15 +56,25 @@ public class import_list extends AsyncTask<String,String,ArrayList<String>> {
                 Log.i("good"," statement " +st);
 
             }
-            query = "SELECT * FROM coursesByOcc";
+            String s = params[0];
+            Log.i("kkkkkk",s);
+
+            query = "SELECT firstName FROM students where studentID ='"+s+"'";
 
             ResultSet rs = st.executeQuery(query);
-
-            while (rs.next())
+            while(rs.next())
             {
-                listOfCourses.add(rs.getString(2));
+                response = rs.toString();
             }
+
+
+            Log.i("answer",response);
             con.close();
+            if(response!=null)
+            {
+                Log.i("inside",response);
+                is = true;
+            }
 
         }
         catch (Exception e)
@@ -84,20 +82,23 @@ public class import_list extends AsyncTask<String,String,ArrayList<String>> {
             e.printStackTrace();
         }
 
-        return listOfCourses;
+        return is;
     }
 
     @Override
-    protected void onPostExecute(ArrayList<String> strings) {
-        super.onPostExecute(strings);
-
-        if (strings == null) {
-            queryInterface.onError();
-        }else {
-            queryInterface.onSuccess(strings);
-        }
+    protected void onPostExecute(Boolean s) {
+        super.onPostExecute(s);
+//        if (s == null) {
+//            queryInterface.onError();
+//        }else {
+//            queryInterface.onSuccess(s);
+//        }
     }
 
+    public void setInterface(BooleanQueryInterface stringQueryInterface)
+    {
+        this.stringQueryInterface = stringQueryInterface;
+    }
 
     @Override
     protected void onProgressUpdate(String... values) {

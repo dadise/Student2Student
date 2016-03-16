@@ -4,31 +4,26 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.student2student.query_task.QueryInterface;
+import com.example.student2student.student;
 
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.Time;
-import java.sql.ResultSet;
 
-import static java.lang.String.*;
-
-public class insert_student extends AsyncTask<String,String,String>{
+public class insert_student extends AsyncTask<student,String,String>{
 
     private final Activity activity;
     private final Context context;
     private int brenchid;
     public String query;
 
-    private QueryInterface queryInterface;
+//    private ArraylistQueryInterface queryInterface;
 
     String DB_URL = "jdbc:mysql://a757fb85-09c9-49bc-8772-a58f008e58f6.mysql.sequelizer.com:3306/dba757fb8509c949bc8772a58f008e58f6";
     String USER = "bjqdlncpsginpfvs";
     String PASS = "BJeASLFDyGpkwA5dzbmJkWFsfwvF7KVGngwtuUhzXiS2q3oqspfHbpFMcUvuqaEW";
+    private ArraylistQueryInterface ArrayqueryInterface;
 
     public insert_student(Activity activity, Context context, int brenchid)
     {
@@ -41,7 +36,7 @@ public class insert_student extends AsyncTask<String,String,String>{
     }
 
     @Override
-    protected String doInBackground(String... params) {
+    protected String doInBackground(student... params) {
 
         String response = "";
 
@@ -51,7 +46,6 @@ public class insert_student extends AsyncTask<String,String,String>{
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(DB_URL,USER,PASS);
 
-//            Log.i("here","aaaaaaaaaaGGGG");
             String result = "\n Database connection succes\n";
 
             Statement st = con.createStatement();
@@ -62,17 +56,14 @@ public class insert_student extends AsyncTask<String,String,String>{
                 Log.i("good"," statement " +st);
 
             }
-//            query = "INSERT into students values("+;
-//            ResultSet rs = st.executeQuery("SELECT * FROM students");
 
-//            int count =0;
+            student s = params[0];
 
-            ResultSet rs = st.executeQuery(query);
+            query = "insert into students values('" + s.first + "','" +s.last+ "','"+s.id+"','"+s.email+"','"+s.lob+"','"+s.teacher+"')";
+//            Log.e("tttttt",query);
 
-            while (rs.next())
-            {
-                response += rs.getString(1) +"  ";
-            }
+            st.executeUpdate(query);
+
             Log.i("answer",response);
             con.close();
 
@@ -85,14 +76,9 @@ public class insert_student extends AsyncTask<String,String,String>{
         return response;
     }
 
-    @Override
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
-        if (s == null) {
-            queryInterface.onError();
-        }else {
-            queryInterface.onSuccess(s);
-        }
+
+    public void setInterface(ArraylistQueryInterface ArrayQueryInterface){
+        this.ArrayqueryInterface = ArrayQueryInterface;
     }
 
     @Override
@@ -102,7 +88,7 @@ public class insert_student extends AsyncTask<String,String,String>{
         Log.i("TAG6", "ist fine!!");
     }
 
-    public void setCallback(QueryInterface callback) {
-        queryInterface = callback;
-    }
+//    public void setCallback(ArraylistQueryInterface callback) {
+//        queryInterface = callback;
+//    }
 }
