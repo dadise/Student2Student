@@ -32,6 +32,7 @@ public class which_to_teach extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_which_to_teach);
 
+//        Intent starterActivity = getIntent();
         Bundle data = getIntent().getExtras();
         if (data == null)
             return;
@@ -45,11 +46,9 @@ public class which_to_teach extends AppCompatActivity {
         lob = data.getString("line of business");
         toTeach = data.getBoolean("to teach");
 
-
-//        ds = new insert_student(this,this,getTaskId());
-//        ds.execute();
-
-        filTheList();
+        filTheList(lob);
+//        finish();
+//        startActivity(starterActivity);
 
         if(listOfCourse != null)
         {
@@ -59,7 +58,10 @@ public class which_to_teach extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     String item = myItems.get(position);
                     Intent intent = new Intent(context,which_to_learn.class);
-                    intent.putExtra("item", item );
+                    intent.putExtra("item", item);
+                    Log.e("asdasdasd",item);
+//                    Log.e("now im here","here");
+//                    finish();
                     startActivity(intent);
 
                 }
@@ -80,13 +82,18 @@ public class which_to_teach extends AppCompatActivity {
 
     }
 
-    private void filTheList(){
-
+    private void filTheList(String lob)
+    {
+        myItems = new ArrayList<String>();
         importList = new import_list(this,getApplicationContext(),getTaskId());
         importList.setInterface(new ArraylistQueryInterface() {
             @Override
             public void onSuccess(ArrayList<String> response) {
                 Log.e("test", response.toString());
+                for (int i = 0; i < response.size(); i++) {
+                    Log.e("course", response.get(i));
+                    myItems.add(response.get(i));
+                }
             }
 
             @Override
@@ -94,7 +101,8 @@ public class which_to_teach extends AppCompatActivity {
 
             }
         });
-        importList.execute();
+        importList.execute(lob);
+
 //        AsyncTask<String, String, ArrayList<String>> il = importList.execute();
 //        ArraylistQueryInterface callback = new ArraylistQueryInterface() {
 //            @Override
@@ -110,35 +118,28 @@ public class which_to_teach extends AppCompatActivity {
 //        importList.setCallback(callback);
 
 //        importList.execute();
-        int count = 0;
+//        int count = 0;
 //        String[] myItem = {"אלגוריתמיקה", "הנדסת תוכנה", "חדוא 2"  , "חדוא 1" ,  "מבוא לחדוא" , "מתמטיקה בדידה 1" , "מתמטיקה בדידה 2" , "אלגברה ליניארית 1" , "אלגברה ליניארית 2" , "מיקרופרוססורים" , "תיכון מונחה עצמים" ,  "מערכות מבוזרות"};
-        this.myItems = new ArrayList<String>();
-
-
-
-//        {
-//           myItems.add(count,il.);
-//        }
-        myItems.add(0, "אלגוריתמיקה");
-        myItems.add(1,"הנדסת תוכנה");
-        myItems.add(2,"מבוא לחדוא");
-        myItems.add(3,"חדוא 1");
-        myItems.add(4,"חדוא 2");
-        myItems.add(5,"מתמטיקה בדידה 1");
-        myItems.add(6,"מתמטיקה בדידה 2");
-        myItems.add(7,"אלגברה ליניארית 1");
-        myItems.add(8,"אלגברה ליניארית 2");
-        myItems.add(9,"מיקרופרוססורים");
-        myItems.add(10,"מערכות מבוזרות");
-        myItems.add(11,"תיכון מונחה עצמים");
-        myItems.add(12,"כלכלה");
-        myItems.add(13,"סגנונות מוזיקליים");
+//        this.myItems = new ArrayList<String>();
+//        myItems.add(0, "אלגוריתמיקה");
+//        myItems.add(1,"הנדסת תוכנה");
+//        myItems.add(2,"מבוא לחדוא");
+//        myItems.add(3,"חדוא 1");
+//        myItems.add(4,"חדוא 2");
+//        myItems.add(5,"מתמטיקה בדידה 1");
+//        myItems.add(6,"מתמטיקה בדידה 2");
+//        myItems.add(7,"אלגברה ליניארית 1");
+//        myItems.add(8,"אלגברה ליניארית 2");
+//        myItems.add(9,"מיקרופרוססורים");
+//        myItems.add(10,"מערכות מבוזרות");
+//        myItems.add(11,"תיכון מונחה עצמים");
+//        myItems.add(12,"כלכלה");
+//        myItems.add(13,"סגנונות מוזיקליים");
 
         adapter = new ArrayAdapter<String>(this, R.layout.teachitems, myItems);
 
         listOfCourse = (ListView) findViewById(R.id.listOfCourses);
         listOfCourse.setAdapter(adapter);
-
 
     }
 

@@ -52,8 +52,8 @@ public class is_exist extends AsyncTask<String,String,Boolean>
 
             if(st != null)
             {
-                Log.i("good", " statement " + con);
-                Log.i("good"," statement " +st);
+                Log.i("good1", " statement " + con);
+                Log.i("good1"," statement " +st);
 
             }
             String s = params[0];

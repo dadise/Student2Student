@@ -31,11 +31,11 @@ public class new_user extends AppCompatActivity {
     EditText lastNameInput;
     EditText IDInput;
     EditText emailInput;
-    CheckBox teach;
+    CheckBox isTeach;
     Spinner s;
     student student;
 
-    String teaching ="";
+    String teaching ="",teach ="",learn = "",grade = "";
     String first, last, id, email, lob;
     boolean toTeach;
 
@@ -53,20 +53,22 @@ public class new_user extends AppCompatActivity {
         IDInput = (EditText) findViewById(R.id.IDInput);
         emailInput = (EditText) findViewById(R.id.e_mailInput);
         s = (Spinner) findViewById(R.id.line_of_business);
-        teach = (CheckBox) findViewById(R.id.teatcingCheckBox);
+        isTeach = (CheckBox) findViewById(R.id.teatcingCheckBox);
 
 
     }
 
     public void toWhichToTeach(View view) {
 
+        Log.e("here","sssssssssssssssssssss");
 
-        if(teach.isChecked())
+        if(isTeach.isChecked()) {
             teaching = "1";
-        else
+        }
+        else {
             teaching = "0";
-
-        student = new student(firstNameInput.getText().toString(),lastNameInput.getText().toString(),IDInput.getText().toString(),emailInput.getText().toString(),s.getSelectedItem().toString(),teaching);
+        }
+        student = new student(firstNameInput.getText().toString(),lastNameInput.getText().toString(),IDInput.getText().toString(),emailInput.getText().toString(),s.getSelectedItem().toString(),teaching,teach,learn,grade);
         isExist = new is_exist(this,getApplicationContext(),getTaskId());
         isExist.execute(IDInput.getText().toString());
         isExist.setInterface(new BooleanQueryInterface() {
@@ -101,11 +103,11 @@ public class new_user extends AppCompatActivity {
         }
         else if(studentExist)
         {
-
+            //error and stay on this page
         }
         else
         {
-            if(teach.isChecked())
+            if(isTeach.isChecked())
             {
                 toWhichToTeachIntent = new Intent(this,which_to_teach.class);
                 put(toWhichToTeachIntent);

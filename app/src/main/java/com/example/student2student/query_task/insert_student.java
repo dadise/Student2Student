@@ -52,14 +52,14 @@ public class insert_student extends AsyncTask<student,String,String>{
 
             if(st != null)
             {
-                Log.i("good"," statement " +con);
-                Log.i("good"," statement " +st);
+                Log.i("good3"," statement " +con);
+                Log.i("good3"," statement " +st);
 
             }
 
             student s = params[0];
 
-            query = "insert into students values('" + s.first + "','" +s.last+ "','"+s.id+"','"+s.email+"','"+s.lob+"','"+s.teacher+"')";
+            query = "insert into students values('" + s.first + "','" +s.last+ "','"+s.id+"','"+s.email+"','"+s.lob+"','"+s.teacher+"',null,null,null)";
 //            Log.e("tttttt",query);
 
             st.executeUpdate(query);

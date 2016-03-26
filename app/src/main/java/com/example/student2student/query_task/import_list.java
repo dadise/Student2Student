@@ -64,17 +64,24 @@ public class import_list extends AsyncTask<String,String,ArrayList<String>> {
 
             if(st != null)
             {
-                Log.i("good", " statement " + con);
-                Log.i("good"," statement " +st);
+                Log.i("good2", " statement " + con);
+                Log.i("good2"," statement " +st);
 
             }
-            query = "SELECT * FROM coursesByOcc";
 
+            String s = params[0];
+            Log.e("import","&&&"+s+"&&&");
+
+            query = "SELECT * FROM coursesByOcc";
             ResultSet rs = st.executeQuery(query);
 
+            Log.e("here", String.valueOf(rs.getFetchSize()));
+
+            int count = 0;
             while (rs.next())
             {
-                listOfCourses.add(rs.getString(2));
+                listOfCourses.add(count,rs.getString(2));
+                count++;
             }
             con.close();
 
