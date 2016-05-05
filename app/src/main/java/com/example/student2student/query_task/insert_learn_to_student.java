@@ -15,7 +15,7 @@ public class insert_learn_to_student extends AsyncTask<courseToTeach,Integer,Str
     private int brenchid;
     public String query;
 
-    String DB_URL = "jdbc:mysql://a757fb85-09c9-49bc-8772-a58f008e58f6.mysql.sequelizer.com:3306/dba757fb8509c949bc8772a58f008e58f6";
+    String DB_URL = "jdbc:mysql://a757fb85-09c9-49bc-8772-a58f008e58f6.mysql.sequelizer.com:3306/dba757fb8509c949bc8772a58f008e58f6?useUnicode=yes&characterEncoding=UTF-8";
     String USER = "bjqdlncpsginpfvs";
     String PASS = "BJeASLFDyGpkwA5dzbmJkWFsfwvF7KVGngwtuUhzXiS2q3oqspfHbpFMcUvuqaEW";
 
@@ -47,7 +47,7 @@ public class insert_learn_to_student extends AsyncTask<courseToTeach,Integer,Str
 
             courseToTeach ctt = params[0];
 
-            query = "update students set learn='"+ ctt.course +"' where studentID ='"+ctt.course+"'";
+            query = "update students set learn='"+ ctt.course +"' where studentID ='"+ctt.id+"'";
 //            update students set teach='שדגדשגשדגשדג' where studentID ='123'
 
             st.executeUpdate(query);

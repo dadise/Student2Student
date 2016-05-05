@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.student2student.which_to_teach;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -22,7 +24,7 @@ public class import_list extends AsyncTask<String,String,ArrayList<String>> {
 
     private ArraylistQueryInterface queryInterface;
 
-    String DB_URL = "jdbc:mysql://a757fb85-09c9-49bc-8772-a58f008e58f6.mysql.sequelizer.com:3306/dba757fb8509c949bc8772a58f008e58f6";
+    String DB_URL = "jdbc:mysql://a757fb85-09c9-49bc-8772-a58f008e58f6.mysql.sequelizer.com:3306/dba757fb8509c949bc8772a58f008e58f6?useUnicode=yes&characterEncoding=UTF-8";
     String USER = "bjqdlncpsginpfvs";
     String PASS = "BJeASLFDyGpkwA5dzbmJkWFsfwvF7KVGngwtuUhzXiS2q3oqspfHbpFMcUvuqaEW";
 
@@ -72,8 +74,9 @@ public class import_list extends AsyncTask<String,String,ArrayList<String>> {
             String s = params[0];
             Log.e("import","&&&"+s+"&&&");
 
-            query = "SELECT * FROM coursesByOcc";
+            query = "SELECT * FROM coursesByOcc where OccName = '" + s + "'"  ;
             ResultSet rs = st.executeQuery(query);
+
 
             Log.e("here", String.valueOf(rs.getFetchSize()));
 
@@ -83,6 +86,7 @@ public class import_list extends AsyncTask<String,String,ArrayList<String>> {
                 listOfCourses.add(count,rs.getString(2));
                 count++;
             }
+            //which_to_teach.h.post(com.example.student2student.which_to_teach.r);
             con.close();
 
         }

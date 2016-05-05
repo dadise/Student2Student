@@ -18,9 +18,8 @@ public class insert_student extends AsyncTask<student,String,String>{
     private int brenchid;
     public String query;
 
-//    private ArraylistQueryInterface queryInterface;
-
-    String DB_URL = "jdbc:mysql://a757fb85-09c9-49bc-8772-a58f008e58f6.mysql.sequelizer.com:3306/dba757fb8509c949bc8772a58f008e58f6";
+    ///////////////////// the end of the DB_URL is insert hebrew to db ////////////////////////
+    String DB_URL = "jdbc:mysql://a757fb85-09c9-49bc-8772-a58f008e58f6.mysql.sequelizer.com:3306/dba757fb8509c949bc8772a58f008e58f6?useUnicode=yes&characterEncoding=UTF-8";
     String USER = "bjqdlncpsginpfvs";
     String PASS = "BJeASLFDyGpkwA5dzbmJkWFsfwvF7KVGngwtuUhzXiS2q3oqspfHbpFMcUvuqaEW";
     private ArraylistQueryInterface ArrayqueryInterface;
@@ -58,6 +57,7 @@ public class insert_student extends AsyncTask<student,String,String>{
             }
 
             student s = params[0];
+            Log.i("ssfsdf",s.lob);
 
             query = "insert into students values('" + s.first + "','" +s.last+ "','"+s.id+"','"+s.email+"','"+s.lob+"','"+s.teacher+"',null,null,null)";
 //            Log.e("tttttt",query);

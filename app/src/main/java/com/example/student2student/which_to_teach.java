@@ -4,6 +4,7 @@ package com.example.student2student;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -14,19 +15,26 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.student2student.query_task.ArraylistQueryInterface;
+import com.example.student2student.query_task.courseToTeach;
 import com.example.student2student.query_task.import_list;
 import com.example.student2student.query_task.insert_student;
+import com.example.student2student.query_task.insert_teach_to_student;
 
 import java.util.ArrayList;
 
 public class which_to_teach extends AppCompatActivity {
 
-    insert_student is;
+    //    insert_student is;
     import_list importList;
+    insert_teach_to_student itts;
     ArrayAdapter<String> adapter;
     ListView listOfCourse;
-    ArrayList<String>  myItems;
-
+    ArrayList<String> myItems;
+    courseToTeach ctt;
+    static ArrayList<String> res;
+    public static android.os.Handler h = new android.os.Handler();
+    public static Runnable r;
+    final Context context = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,41 +45,92 @@ public class which_to_teach extends AppCompatActivity {
         if (data == null)
             return;
 
-        String first, last, id, email, lob;
+        final String first, last, ID, email, lob;
         boolean toTeach;
         first = data.getString("first");
         last = data.getString("last");
-        id = data.getString("id");
+        ID = data.getString("id");
         email = data.getString("email");
         lob = data.getString("line of business");
         toTeach = data.getBoolean("to teach");
 
-        filTheList(lob);
-//        finish();
-//        startActivity(starterActivity);
+
+        importList = new import_list(this, getApplicationContext(), getTaskId());
+        importList.setInterface(new ArraylistQueryInterface() {
+            @Override
+            public void onSuccess(ArrayList<String> response) {
+
+                Log.d("123456789", response.get(0));
+                res = response;
+
+                filTheList(lob, res);
+                h.post(r);
+
+
+            }
+
+            @Override
+            public void onError() {
+                Log.d("123456789", "1234567890987654321999999999999999999999RRR");
+            }
+        });
+
+        importList.execute(lob);
+
+        // list fill after the if statment
+//        Log.i("list",listOfCourse);
+//        while(listOfCourse == null)
+//        {
+//            ////////////////// probebley need progress bar///////
+//
+//            Log.i("still","waiting");
+//        }
+
+
+
+        r = new Runnable() {
+            @Override
+            public void run() {
+                Log.d("12345", "before");
+
 
         if(listOfCourse != null)
         {
-            final Context context = this;
+            Log.i("list not empty","sadasd");
+
+
+            Log.i("now im here", "here");
             listOfCourse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Log.e("now im here", "here");
+
                     String item = myItems.get(position);
-                    Intent intent = new Intent(context,which_to_learn.class);
+                    Intent intent = new Intent(context, which_to_learn.class);
                     intent.putExtra("item", item);
-                    Log.e("asdasdasd",item);
-//                    Log.e("now im here","here");
+                    ctt = new courseToTeach(ID, item);
+                    Log.e("asdasdasd", item + "  " + ID);
+//                    itts = new insert_teach_to_student(this,getApplicationContext(),getTaskId());
+                    //////////////////////////////// problem to update the student info //////////////////////////////
+
+//                    itts.execute(ctt);
 //                    finish();
                     startActivity(intent);
 
                 }
             });
         }
-
+        else
+        {
+            Log.i("ssss","sssssssssss");
+        }
+                Log.d("12345", "after");
+            }
+        };
 
         final TextView change = (TextView) findViewById(R.id.change);
-        change.setText("שלום לך " + first +" "+last);
-        if (first == "" || last == "" || id == "" || email == "") {
+        change.setText("שלום לך " + first + " " + last);
+        if (first == "" || last == "" || ID == "" || email == "") {
             Intent intent = new Intent(this, new_user.class);
             startActivity(intent);
         }
@@ -82,78 +141,26 @@ public class which_to_teach extends AppCompatActivity {
 
     }
 
-    private void filTheList(String lob)
-    {
+    private void filTheList(String lob, ArrayList<String> response) {
         myItems = new ArrayList<String>();
-        importList = new import_list(this,getApplicationContext(),getTaskId());
-        importList.setInterface(new ArraylistQueryInterface() {
-            @Override
-            public void onSuccess(ArrayList<String> response) {
-                Log.e("test", response.toString());
-                for (int i = 0; i < response.size(); i++) {
-                    Log.e("course", response.get(i));
-                    myItems.add(response.get(i));
-                }
-            }
 
-            @Override
-            public void onError() {
+        Log.e("test", response.toString());
+        for (int i = 0; i < response.size(); i++)
+        {
+            Log.e("course", response.get(i));
+            myItems.add(response.get(i));
+        }
 
-            }
-        });
-        importList.execute(lob);
-
-//        AsyncTask<String, String, ArrayList<String>> il = importList.execute();
-//        ArraylistQueryInterface callback = new ArraylistQueryInterface() {
-//            @Override
-//            public void onSuccess(ArrayList<String> response) {
-//
-//            }
-//
-//            @Override
-//            public void onError() {
-//
-//            }
-//        };
-//        importList.setCallback(callback);
-
-//        importList.execute();
-//        int count = 0;
-//        String[] myItem = {"אלגוריתמיקה", "הנדסת תוכנה", "חדוא 2"  , "חדוא 1" ,  "מבוא לחדוא" , "מתמטיקה בדידה 1" , "מתמטיקה בדידה 2" , "אלגברה ליניארית 1" , "אלגברה ליניארית 2" , "מיקרופרוססורים" , "תיכון מונחה עצמים" ,  "מערכות מבוזרות"};
-//        this.myItems = new ArrayList<String>();
-//        myItems.add(0, "אלגוריתמיקה");
-//        myItems.add(1,"הנדסת תוכנה");
-//        myItems.add(2,"מבוא לחדוא");
-//        myItems.add(3,"חדוא 1");
-//        myItems.add(4,"חדוא 2");
-//        myItems.add(5,"מתמטיקה בדידה 1");
-//        myItems.add(6,"מתמטיקה בדידה 2");
-//        myItems.add(7,"אלגברה ליניארית 1");
-//        myItems.add(8,"אלגברה ליניארית 2");
-//        myItems.add(9,"מיקרופרוססורים");
-//        myItems.add(10,"מערכות מבוזרות");
-//        myItems.add(11,"תיכון מונחה עצמים");
-//        myItems.add(12,"כלכלה");
-//        myItems.add(13,"סגנונות מוזיקליים");
 
         adapter = new ArrayAdapter<String>(this, R.layout.teachitems, myItems);
 
+//        h.post(r);
         listOfCourse = (ListView) findViewById(R.id.listOfCourses);
         listOfCourse.setAdapter(adapter);
 
+
     }
 
-    public void toNewUser(View view)
-    {
-        Intent intent = new Intent(this,new_user.class);
-        startActivity(intent);
-    }
-
-    public void toWhichToLearn(View view)
-    {
-        Intent intent = new Intent(this,which_to_learn.class);
-        startActivity(intent);
-    }
 
 
 }

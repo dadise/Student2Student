@@ -19,7 +19,7 @@ public class is_exist extends AsyncTask<String,String,Boolean>
 
 //    private ArraylistQueryInterface queryInterface;
 
-    String DB_URL = "jdbc:mysql://a757fb85-09c9-49bc-8772-a58f008e58f6.mysql.sequelizer.com:3306/dba757fb8509c949bc8772a58f008e58f6";
+    String DB_URL = "jdbc:mysql://a757fb85-09c9-49bc-8772-a58f008e58f6.mysql.sequelizer.com:3306/dba757fb8509c949bc8772a58f008e58f6?useUnicode=yes&characterEncoding=UTF-8";
     String USER = "bjqdlncpsginpfvs";
     String PASS = "BJeASLFDyGpkwA5dzbmJkWFsfwvF7KVGngwtuUhzXiS2q3oqspfHbpFMcUvuqaEW";
     private BooleanQueryInterface stringQueryInterface;
@@ -38,7 +38,7 @@ public class is_exist extends AsyncTask<String,String,Boolean>
     protected Boolean doInBackground(String... params) {
 
         String response = "";
-        boolean is = false;
+        boolean is = true;
 
         try
         {
@@ -62,18 +62,18 @@ public class is_exist extends AsyncTask<String,String,Boolean>
             query = "SELECT firstName FROM students where studentID ='"+s+"'";
 
             ResultSet rs = st.executeQuery(query);
-            while(rs.next())
+            if(rs.next())
             {
                 response = rs.toString();
             }
 
 
-            Log.i("answer",response);
+            Log.i("answer in is exist", String.valueOf(response.length()));
             con.close();
-            if(response!=null)
+            if(String.valueOf(response.length()) != "0")
             {
                 Log.i("inside",response);
-                is = true;
+                is = false;
             }
 
         }

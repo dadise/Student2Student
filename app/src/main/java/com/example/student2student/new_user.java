@@ -1,6 +1,7 @@
 package com.example.student2student;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -60,7 +61,7 @@ public class new_user extends AppCompatActivity {
 
     public void toWhichToTeach(View view) {
 
-        Log.e("here","sssssssssssssssssssss");
+//        Log.e("in new user","sssssssssssssssssssss");
 
         if(isTeach.isChecked()) {
             teaching = "1";
@@ -74,7 +75,7 @@ public class new_user extends AppCompatActivity {
         isExist.setInterface(new BooleanQueryInterface() {
             @Override
             public void onSuccess(Boolean b) {
-                Log.e("blabla" , b.toString());
+                Log.e("blabla", b.toString());
             }
 
             @Override
@@ -82,6 +83,7 @@ public class new_user extends AppCompatActivity {
 
             }
         });
+
         insertStudent = new insert_student(this,getApplicationContext(),getTaskId());
         insertStudent.setInterface(new ArraylistQueryInterface() {
             @Override
@@ -115,7 +117,6 @@ public class new_user extends AppCompatActivity {
 
             }
             else
-
             {
                 toWhichToLearnIntent = new Intent(this,which_to_learn.class);
                 put(toWhichToLearnIntent);
