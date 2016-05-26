@@ -2,6 +2,7 @@ package com.example.student2student.query_task;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.AdapterView;
@@ -14,8 +15,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
-public class insert_teach_to_student extends AsyncTask<courseToTeach,Integer,String> {
-    private final Activity activity;
+public class insert_teach_to_student extends AsyncTask<courseToTeach,Integer,Void> {
+//    private final Activity activity;
     private final Context context;
     private int brenchid;
     public String query;
@@ -23,10 +24,11 @@ public class insert_teach_to_student extends AsyncTask<courseToTeach,Integer,Str
     String DB_URL = "jdbc:mysql://a757fb85-09c9-49bc-8772-a58f008e58f6.mysql.sequelizer.com:3306/dba757fb8509c949bc8772a58f008e58f6?useUnicode=yes&characterEncoding=UTF-8";
     String USER = "bjqdlncpsginpfvs";
     String PASS = "BJeASLFDyGpkwA5dzbmJkWFsfwvF7KVGngwtuUhzXiS2q3oqspfHbpFMcUvuqaEW";
+    private StringQueryInterface queryInterface;
 
-    public insert_teach_to_student(AdapterView.OnItemClickListener activity, Context context, int brenchid)
+    public insert_teach_to_student( Context context, int brenchid)
     {
-        this.activity = (Activity) activity;
+//        this.activity = (Activity) activity;
         this.context = context;
         this.brenchid = brenchid;
     }
@@ -34,7 +36,7 @@ public class insert_teach_to_student extends AsyncTask<courseToTeach,Integer,Str
 
 
     @Override
-    protected String doInBackground(courseToTeach... params) {
+    protected Void doInBackground(courseToTeach... params) {
 
         String response = "";
 
@@ -43,7 +45,7 @@ public class insert_teach_to_student extends AsyncTask<courseToTeach,Integer,Str
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(DB_URL, USER, PASS);
 
-            String result = "\n Database connection succes\n";
+            String result = "\n Database connection success\n";
 
             Statement st = con.createStatement();
 
@@ -54,7 +56,8 @@ public class insert_teach_to_student extends AsyncTask<courseToTeach,Integer,Str
             }
 
             courseToTeach ctt = params[0];
-//            Log.e("sdsf",ctt.course);
+            Log.e("sdsf",ctt.course);
+
 
             query = "update students set teach='"+ ctt.course +"' where studentID ='"+ctt.id+"'";
 //            update students set teach='שדגדשגשדגשדג' where studentID ='123'
@@ -68,7 +71,20 @@ public class insert_teach_to_student extends AsyncTask<courseToTeach,Integer,Str
             e.printStackTrace();
         }
 
-        return response;
+//        return;
 
+        return null;
     }
+
+    public void setInterface(StringQueryInterface ArrayQueryInterface){
+        this.queryInterface = ArrayQueryInterface;
+    }
+
+    @Override
+    protected void onProgressUpdate(Integer... values) {
+        super.onProgressUpdate();
+
+        Log.i("TAG6", "ist fine!!");
+    }
+
 }

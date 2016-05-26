@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 public class import_list extends AsyncTask<String,String,ArrayList<String>> {
 
-    private final Activity activity;
     private final Context context;
     private int brenchid;
     public String query;
@@ -28,10 +27,8 @@ public class import_list extends AsyncTask<String,String,ArrayList<String>> {
     String USER = "bjqdlncpsginpfvs";
     String PASS = "BJeASLFDyGpkwA5dzbmJkWFsfwvF7KVGngwtuUhzXiS2q3oqspfHbpFMcUvuqaEW";
 
-    public import_list(Activity activity, Context context, int brenchid)
+    public import_list(Context context, int brenchid)
     {
-
-        this.activity = activity;
         this.context = context;
         this.brenchid = brenchid;
 

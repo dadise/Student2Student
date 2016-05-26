@@ -10,7 +10,7 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 
 public class insert_learn_to_student extends AsyncTask<courseToTeach,Integer,String> {
-    private final Activity activity;
+//    private final Activity activity;
     private final Context context;
     private int brenchid;
     public String query;
@@ -19,8 +19,10 @@ public class insert_learn_to_student extends AsyncTask<courseToTeach,Integer,Str
     String USER = "bjqdlncpsginpfvs";
     String PASS = "BJeASLFDyGpkwA5dzbmJkWFsfwvF7KVGngwtuUhzXiS2q3oqspfHbpFMcUvuqaEW";
 
-    public insert_learn_to_student(Activity activity, Context context, int brenchid) {
-        this.activity = activity;
+    private StringQueryInterface queryInterface;
+
+    public insert_learn_to_student( Context context, int brenchid) {
+//        this.activity = activity;
         this.context = context;
         this.brenchid = brenchid;
     }
@@ -61,6 +63,17 @@ public class insert_learn_to_student extends AsyncTask<courseToTeach,Integer,Str
 
         return response;
 
+    }
+
+    public void setInterface(StringQueryInterface ArrayQueryInterface){
+        this.queryInterface = ArrayQueryInterface;
+    }
+
+    @Override
+    protected void onProgressUpdate(Integer... values) {
+        super.onProgressUpdate();
+
+        Log.i("TAG6", "ist fine!!");
     }
 
 

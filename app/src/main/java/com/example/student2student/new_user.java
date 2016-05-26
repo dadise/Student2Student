@@ -70,8 +70,8 @@ public class new_user extends AppCompatActivity {
             teaching = "0";
         }
         student = new student(firstNameInput.getText().toString(),lastNameInput.getText().toString(),IDInput.getText().toString(),emailInput.getText().toString(),s.getSelectedItem().toString(),teaching,teach,learn,grade);
+
         isExist = new is_exist(this,getApplicationContext(),getTaskId());
-        isExist.execute(IDInput.getText().toString());
         isExist.setInterface(new BooleanQueryInterface() {
             @Override
             public void onSuccess(Boolean b) {
@@ -83,6 +83,7 @@ public class new_user extends AppCompatActivity {
 
             }
         });
+        isExist.execute(IDInput.getText().toString());
 
         insertStudent = new insert_student(this,getApplicationContext(),getTaskId());
         insertStudent.setInterface(new ArraylistQueryInterface() {
