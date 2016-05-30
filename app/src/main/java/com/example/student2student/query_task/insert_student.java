@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.student2student.student;
 
@@ -71,8 +72,13 @@ public class insert_student extends AsyncTask<student,String,String>{
         catch (Exception e)
         {
             e.printStackTrace();
+            if(e.toString().contains("Duplicate"))
+            {
+                ArrayqueryInterface.onError("Duplicate");
+                return response;
+            }
         }
-
+        ArrayqueryInterface.onSuccess(null);
         return response;
     }
 
@@ -88,7 +94,13 @@ public class insert_student extends AsyncTask<student,String,String>{
         Log.i("TAG6", "ist fine!!");
     }
 
-//    public void setCallback(ArraylistQueryInterface callback) {
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+
+    }
+
+    //    public void setCallback(ArraylistQueryInterface callback) {
 //        queryInterface = callback;
 //    }
 }

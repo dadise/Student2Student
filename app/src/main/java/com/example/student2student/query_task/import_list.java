@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.student2student.CourseItem;
 import com.example.student2student.which_to_teach;
 
 import java.sql.Connection;
@@ -14,12 +15,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 
-public class import_list extends AsyncTask<String,String,ArrayList<String>> {
+public class import_list extends AsyncTask<String, String, ArrayList<CourseItem>> {
 
     private final Context context;
     private int brenchid;
-    public String query;
-    ArrayList<String> listOfCourses;
+    private String query;
+    private ArrayList<CourseItem> listOfCourses;
 
     private ArraylistQueryInterface queryInterface;
 
@@ -27,33 +28,27 @@ public class import_list extends AsyncTask<String,String,ArrayList<String>> {
     String USER = "bjqdlncpsginpfvs";
     String PASS = "BJeASLFDyGpkwA5dzbmJkWFsfwvF7KVGngwtuUhzXiS2q3oqspfHbpFMcUvuqaEW";
 
-    public import_list(Context context, int brenchid)
-    {
+    public import_list(Context context, int brenchid) {
         this.context = context;
         this.brenchid = brenchid;
-
-
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-
     }
 
-    public void setInterface(ArraylistQueryInterface queryInterface){
+    public void setInterface(ArraylistQueryInterface queryInterface) {
         this.queryInterface = queryInterface;
     }
 
 
-
     @Override
-    protected ArrayList<String> doInBackground(String... params) {
+    protected ArrayList<CourseItem> doInBackground(String... params) {
 
-        listOfCourses = new ArrayList<String>();
+        listOfCourses = new ArrayList<>();
 
-        try
-        {
+        try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(DB_URL, USER, PASS);
 
@@ -61,34 +56,18 @@ public class import_list extends AsyncTask<String,String,ArrayList<String>> {
 
             Statement st = con.createStatement();
 
-            if(st != null)
-            {
-                Log.i("good2", " statement " + con);
-                Log.i("good2"," statement " +st);
-
-            }
-
             String s = params[0];
-            Log.e("import","&&&"+s+"&&&");
-
-            query = "SELECT * FROM coursesByOcc where OccName = '" + s + "'"  ;
+            query = "SELECT * FROM coursesByOcc where OccName = '" + s + "'";
             ResultSet rs = st.executeQuery(query);
 
-
-            Log.e("here", String.valueOf(rs.getFetchSize()));
-
             int count = 0;
-            while (rs.next())
-            {
-                listOfCourses.add(count,rs.getString(2));
+            while (rs.next()) {
+                listOfCourses.add(new CourseItem(rs.getString(2),false));
                 count++;
             }
-            //which_to_teach.h.post(com.example.student2student.which_to_teach.r);
             con.close();
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -96,12 +75,12 @@ public class import_list extends AsyncTask<String,String,ArrayList<String>> {
     }
 
     @Override
-    protected void onPostExecute(ArrayList<String> strings) {
+    protected void onPostExecute(ArrayList<CourseItem> strings) {
         super.onPostExecute(strings);
 
         if (strings == null) {
-            queryInterface.onError();
-        }else {
+            queryInterface.onError(null);
+        } else {
             queryInterface.onSuccess(strings);
         }
     }

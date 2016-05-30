@@ -1,5 +1,7 @@
 package com.example.student2student;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -35,8 +37,8 @@ public class new_user extends AppCompatActivity {
     CheckBox isTeach;
     Spinner s;
     student student;
-
-    String teaching ="",teach ="",learn = "",grade = "";
+    private Context context;
+    String teaching = "", teach = "", learn = "", grade = "";
     String first, last, id, email, lob;
     boolean toTeach;
 
@@ -46,6 +48,7 @@ public class new_user extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_user);
+        context = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -60,72 +63,60 @@ public class new_user extends AppCompatActivity {
     }
 
     public void toWhichToTeach(View view) {
-
-//        Log.e("in new user","sssssssssssssssssssss");
-
-        if(isTeach.isChecked()) {
-            teaching = "1";
+        if (firstNameInput.getText().toString().equals("") || lastNameInput.getText().toString().equals("") ||
+                IDInput.getText().toString().equals("") || emailInput.getText().toString().equals("")) {
+            Toast.makeText(this, "you left some empty fields", Toast.LENGTH_LONG).show();
+            return;
         }
-        else {
+
+        if (isTeach.isChecked()) {
+            teaching = "1";
+        } else {
             teaching = "0";
         }
-        student = new student(firstNameInput.getText().toString(),lastNameInput.getText().toString(),IDInput.getText().toString(),emailInput.getText().toString(),s.getSelectedItem().toString(),teaching,teach,learn,grade);
+        student = new student(firstNameInput.getText().toString(), lastNameInput.getText().toString(), IDInput.getText().toString(), emailInput.getText().toString(), s.getSelectedItem().toString(), teaching, teach, learn, grade);
 
-        isExist = new is_exist(this,getApplicationContext(),getTaskId());
-        isExist.setInterface(new BooleanQueryInterface() {
-            @Override
-            public void onSuccess(Boolean b) {
-                Log.e("blabla", b.toString());
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        });
-        isExist.execute(IDInput.getText().toString());
-
-        insertStudent = new insert_student(this,getApplicationContext(),getTaskId());
+        insertStudent = new insert_student(this, getApplicationContext(), getTaskId());
         insertStudent.setInterface(new ArraylistQueryInterface() {
             @Override
-            public void onSuccess(ArrayList<String> response) {
-                Log.e("another", response.toString());
+            public void onSuccess(ArrayList<CourseItem> response) {
+                moveToNextActivity();
             }
 
             @Override
-            public void onError() {
+            public void onError(String errType) {
+                switch (errType) {
+                    case "Duplicate":
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(context, "User with that ID already exists", Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
+                        break;
+                    default:
+                        break;
+                }
             }
         });
         insertStudent.execute(student);
 
-        if(firstNameInput.getText().toString().equals("") || lastNameInput.getText().toString().equals("") ||
-                IDInput.getText().toString().equals("") || emailInput.getText().toString().equals(""))
-        {
-            Toast.makeText(this,"you left some empty fields",Toast.LENGTH_LONG).show();
-        }
-        else if(studentExist)
-        {
-            //error and stay on this page
-        }
-        else
-        {
-            if(isTeach.isChecked())
-            {
-                toWhichToTeachIntent = new Intent(this,which_to_teach.class);
-                put(toWhichToTeachIntent);
-                startActivity(toWhichToTeachIntent);
+    }
 
-            }
-            else
-            {
-                toWhichToLearnIntent = new Intent(this,which_to_learn.class);
-                put(toWhichToLearnIntent);
-                startActivity(toWhichToLearnIntent);
+    private void moveToNextActivity() {
+        if (isTeach.isChecked()) {
+            toWhichToTeachIntent = new Intent(this, which_to_teach.class);
+            put(toWhichToTeachIntent);
+            startActivity(toWhichToTeachIntent);
 
-            }
+        } else {
+            toWhichToLearnIntent = new Intent(this, which_to_learn.class);
+            put(toWhichToLearnIntent);
+            startActivity(toWhichToLearnIntent);
 
         }
+
     }
 
     private void put(Intent i) {

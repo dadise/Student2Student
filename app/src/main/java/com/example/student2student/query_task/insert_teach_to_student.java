@@ -14,9 +14,10 @@ import com.example.student2student.which_to_teach;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.util.ArrayList;
 
-public class insert_teach_to_student extends AsyncTask<courseToTeach,Integer,Void> {
-//    private final Activity activity;
+public class insert_teach_to_student extends AsyncTask<courseToTeach, Integer, Void> {
+    //    private final Activity activity;
     private final Context context;
     private int brenchid;
     public String query;
@@ -25,14 +26,14 @@ public class insert_teach_to_student extends AsyncTask<courseToTeach,Integer,Voi
     String USER = "bjqdlncpsginpfvs";
     String PASS = "BJeASLFDyGpkwA5dzbmJkWFsfwvF7KVGngwtuUhzXiS2q3oqspfHbpFMcUvuqaEW";
     private StringQueryInterface queryInterface;
-
-    public insert_teach_to_student( Context context, int brenchid)
-    {
-//        this.activity = (Activity) activity;
+    private ArrayList<courseToTeach> coursesToTeach;
+    private String studentID;
+    public insert_teach_to_student(String ID,ArrayList<courseToTeach> ctt, Context context, int brenchid) {
+        this.coursesToTeach = ctt;
         this.context = context;
         this.brenchid = brenchid;
+        this.studentID = ID;
     }
-
 
 
     @Override
@@ -55,11 +56,21 @@ public class insert_teach_to_student extends AsyncTask<courseToTeach,Integer,Voi
 
             }
 
-            courseToTeach ctt = params[0];
-            Log.e("sdsf",ctt.course);
+            String coursesToUpdate = "";
+            for (int i = 0; i < coursesToTeach.size(); i++) {
+                coursesToUpdate += coursesToTeach.get(i).getCourse();
+                if (i < coursesToTeach.size() - 1) {
+                    coursesToUpdate+="#";
+                }
+            }
+
+            String arr[] = coursesToUpdate.split("\\#");
+
+            Log.e("sdsf", arr[0]);
+            Log.e("sdsf", arr[1]);
 
 
-            query = "update students set teach='"+ ctt.course +"' where studentID ='"+ctt.id+"'";
+            query = "update students set teach='" + coursesToUpdate + "' where studentID ='" + studentID + "'";
 //            update students set teach='שדגדשגשדגשדג' where studentID ='123'
 
             st.executeUpdate(query);
@@ -76,7 +87,7 @@ public class insert_teach_to_student extends AsyncTask<courseToTeach,Integer,Voi
         return null;
     }
 
-    public void setInterface(StringQueryInterface ArrayQueryInterface){
+    public void setInterface(StringQueryInterface ArrayQueryInterface) {
         this.queryInterface = ArrayQueryInterface;
     }
 

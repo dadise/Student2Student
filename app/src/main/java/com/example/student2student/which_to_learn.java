@@ -61,17 +61,15 @@ public class which_to_learn extends AppCompatActivity {
         importList = new import_list(getApplicationContext(), getTaskId());
         importList.setInterface(new ArraylistQueryInterface() {
             @Override
-            public void onSuccess(ArrayList<String> response) {
+            public void onSuccess(ArrayList<CourseItem> response) {
 
-                Log.d("success whichToLearn", response.get(0));
-                res = response;
 
-                filTheList(lob, res);
+//                filTheList(lob, response);
                 h.post(r);
             }
 
             @Override
-            public void onError()
+            public void onError(String errType)
             {
                 Log.d("error whichToLearn", "111");
             }
