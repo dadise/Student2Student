@@ -12,24 +12,48 @@
     tools:context="com.example.student2student.which_to_learn"
     tools:showIn="@layout/activity_which_to_learn">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="משתנה"
+            android:id="@+id/change"
+            android:textColor="@color/red"
+            android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="מה תרצה ללמוד"
-        android:id="@+id/headline"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="27dp"
-        android:textColor="@color/red"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="מה תרצה ללמוד"
+            android:id="@+id/headline"
+            android:layout_below="@+id/change"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/red"/>
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listOfCourses2"
-        android:layout_below="@+id/headline"
-        android:layout_centerHorizontal="true" />
+        <Button
+            android:layout_width="wrap_content"
+            android:text="OK"
+            android:id="@+id/ok_button"
+            android:textSize="20sp"
+            android:textColor="@color/red"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/white"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:id="@+id/recyclerview"
+            android:layout_below="@id/headline"
+            android:layout_height="wrap_content"/>
 
 
-</RelativeLayout>
+
+    </RelativeLayout>
+
+
+
+
+

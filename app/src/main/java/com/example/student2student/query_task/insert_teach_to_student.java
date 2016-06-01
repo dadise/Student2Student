@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 public class insert_teach_to_student extends AsyncTask<courseToTeach, Integer, Void> {
     //    private final Activity activity;
+    public static final String IS_TEACH = "isTeach", IS_LEARN = "isLearn";
     private final Context context;
     private int brenchid;
     public String query;
@@ -28,8 +29,11 @@ public class insert_teach_to_student extends AsyncTask<courseToTeach, Integer, V
     private StringQueryInterface queryInterface;
     private ArrayList<courseToTeach> coursesToTeach;
     private String studentID;
-    public insert_teach_to_student(String ID,ArrayList<courseToTeach> ctt, Context context, int brenchid) {
+    private String type;
+
+    public insert_teach_to_student(String type, String ID, ArrayList<courseToTeach> ctt, Context context, int brenchid) {
         this.coursesToTeach = ctt;
+        this.type = type;
         this.context = context;
         this.brenchid = brenchid;
         this.studentID = ID;
@@ -42,7 +46,6 @@ public class insert_teach_to_student extends AsyncTask<courseToTeach, Integer, V
         String response = "";
 
         try {
-            boolean running = true;
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(DB_URL, USER, PASS);
 
@@ -50,39 +53,27 @@ public class insert_teach_to_student extends AsyncTask<courseToTeach, Integer, V
 
             Statement st = con.createStatement();
 
-            if (st != null) {
-                Log.i("good4", " statement " + con);
-                Log.i("good4", " statement " + st);
-
-            }
-
             String coursesToUpdate = "";
             for (int i = 0; i < coursesToTeach.size(); i++) {
                 coursesToUpdate += coursesToTeach.get(i).getCourse();
                 if (i < coursesToTeach.size() - 1) {
-                    coursesToUpdate+="#";
+                    coursesToUpdate += "#";
                 }
             }
 
-            String arr[] = coursesToUpdate.split("\\#");
-
-            Log.e("sdsf", arr[0]);
-            Log.e("sdsf", arr[1]);
-
-
-            query = "update students set teach='" + coursesToUpdate + "' where studentID ='" + studentID + "'";
+            if (type.equals(IS_TEACH)) {
+                query = "update students set teach='" + coursesToUpdate + "' where studentID ='" + studentID + "'";
+            } else if (type.equals(IS_LEARN)) {
+                query = "update students set learn='" + coursesToUpdate + "' where studentID ='" + studentID + "'";
+            }
 //            update students set teach='שדגדשגשדגשדג' where studentID ='123'
 
             st.executeUpdate(query);
-
-            Log.i("answer", response);
             con.close();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-//        return;
 
         return null;
     }
@@ -94,8 +85,6 @@ public class insert_teach_to_student extends AsyncTask<courseToTeach, Integer, V
     @Override
     protected void onProgressUpdate(Integer... values) {
         super.onProgressUpdate();
-
-        Log.i("TAG6", "ist fine!!");
     }
 
 }

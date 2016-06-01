@@ -124,8 +124,7 @@ public class which_to_teach extends AppCompatActivity {
                     return;
                 }
 
-                //TODO: CONTINUE FROM HERE -- Item is not being updated.
-                itts = new insert_teach_to_student(ID, coursesToTeach, getApplicationContext(), getTaskId());
+                itts = new insert_teach_to_student(insert_teach_to_student.IS_TEACH,ID, coursesToTeach, getApplicationContext(), getTaskId());
                 itts.setInterface(new StringQueryInterface() {
                     @Override
                     public void onSuccess(String response) {

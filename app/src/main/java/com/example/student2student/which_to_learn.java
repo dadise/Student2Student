@@ -1,53 +1,61 @@
 package com.example.student2student;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.student2student.query_task.ArraylistQueryInterface;
 import com.example.student2student.query_task.StringQueryInterface;
 import com.example.student2student.query_task.courseToTeach;
 import com.example.student2student.query_task.import_list;
-import com.example.student2student.query_task.insert_learn_to_student;
+import com.example.student2student.query_task.insert_student;
 import com.example.student2student.query_task.insert_teach_to_student;
 
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class which_to_learn extends AppCompatActivity {
 
-    ArrayAdapter<String> adapter;
-    ListView listOfCourse;
-    ArrayList<String>  myItems;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private CourseListAdapter listAdapter;
+    private ArrayList<CourseItem> coursesList;
+
+    private Button btnOK;
+
     import_list importList;
-    courseToTeach ctt;
-    insert_learn_to_student ilts;
-    static ArrayList<String> res;
-    public static android.os.Handler h = new android.os.Handler();
-    public static Runnable r;
+    insert_teach_to_student itts;
     final Context context = this;
 
-    /////////////////////////////////////////fix this class/////////////////////////////////////////////////////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_which_to_learn);
 
-        final Bundle data = getIntent().getExtras();
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        coursesList = new ArrayList<>();
+        listAdapter = new CourseListAdapter(this, coursesList);
+        recyclerView.setAdapter(listAdapter);
 
-        if(data == null)
-        {
-            Log.i("data from whichToTeach activity","not here");
+        final Bundle data = getIntent().getExtras();
+        if (data == null)
             return;
-        }
 
         final String first, last, ID, email, lob;
         boolean toTeach;
@@ -58,120 +66,76 @@ public class which_to_learn extends AppCompatActivity {
         lob = data.getString("line of business");
         toTeach = data.getBoolean("to teach");
 
+        final TextView change = (TextView) findViewById(R.id.change);
+        change.setText("שלום לך " + first + " " + last);
+        if (first == "" || last == "" || ID == "" || email == "") {
+            Intent intent = new Intent(this, new_user.class);
+            startActivity(intent);
+        }
+
         importList = new import_list(getApplicationContext(), getTaskId());
         importList.setInterface(new ArraylistQueryInterface() {
             @Override
             public void onSuccess(ArrayList<CourseItem> response) {
-
-
-//                filTheList(lob, response);
-                h.post(r);
+                coursesList.addAll(response);
+                listAdapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onError(String errType)
-            {
-                Log.d("error whichToLearn", "111");
+            public void onError(String errType) {
             }
         });
-        
         importList.execute(lob);
 
-        r = new Runnable()
-        {
+
+        btnOK = (Button) findViewById(R.id.ok_button);
+        btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run()
-            {
-                Log.d("12345", "before");
-
-                if(listOfCourse != null)
-                {
-                    listOfCourse.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                    {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                        {
-                            Log.e("whichToLearn", "here");
-
-                            String item = myItems.get(position);
-                            Intent intent = new Intent(context,result.class);
-                            put(intent,data);
-                            ctt = new courseToTeach(ID,item);
-                            Log.e("asdasdasd", item + "  " + ID);
-                            ilts = new insert_learn_to_student(getApplicationContext(),getTaskId());
-                            ilts.setInterface(new StringQueryInterface() {
-                                @Override
-                                public void onSuccess(String response) {
-                                    Log.e("another", response.toString());
-                                }
-
-                                @Override
-                                public void onError() {
-
-                                }
-                            });
-                            ilts.execute(ctt);
-
-                            startActivity(intent);
-                        }
-                    });
-
-                }
-                else
-                {
-                    Log.i("list is", "null");
+            public void onClick(View v) {
+                ArrayList<courseToTeach> coursesToTeach = new ArrayList<>();
+                courseToTeach ctt = null;
+                for (CourseItem item : coursesList) {
+                    if (item.isChecked()) {
+                        coursesToTeach.add(new courseToTeach(ID, item.getCourseName()));
+                    }
                 }
 
-                Log.d("12345", "after");
+                if (coursesToTeach.size() > 3) {
+                    Toast.makeText(which_to_learn.this, "Please choose maximum 3 courses!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(coursesToTeach.size() == 0)
+                {
+                    Toast.makeText(which_to_learn.this, "Please choose at least one course!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                itts = new insert_teach_to_student(insert_teach_to_student.IS_LEARN,ID, coursesToTeach, getApplicationContext(), getTaskId());
+                itts.setInterface(new StringQueryInterface() {
+                    @Override
+                    public void onSuccess(String response) {
+                        Log.e("another", response.toString());
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+                itts.execute(ctt);
+                Intent intent = new Intent(context, result.class);
+                put(intent, data);
+                startActivity(intent);
             }
-        };
-        if(listOfCourse != null)
-        {
-            final Context context = this;
-            listOfCourse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String item = myItems.get(position);
-                    Intent intent = new Intent(context, result.class);
-                    intent.putExtra("item", item);
-                    startActivity(intent);
-
-                }
-            });
-        }
-
+        });
     }
 
-    private void filTheList(String lob, ArrayList<String> response) 
-    {
-        myItems = new ArrayList<String>();
-
-        Log.e("test", response.toString());
-        for (int i = 0; i < response.size(); i++)
-        {
-            Log.e("course", response.get(i));
-            myItems.add(response.get(i));
-        }
-
-
-        adapter = new ArrayAdapter<String>(this, R.layout.teachitems, myItems);
-
-//        h.post(r);
-        listOfCourse = (ListView) findViewById(R.id.listOfCourses2);
-        listOfCourse.setAdapter(adapter);
-
-
-    }
-
-    private void put(Intent i,Bundle b) 
-    {
-        i.putExtra("first",b.getString("first"));
+    private void put(Intent i, Bundle b) {
+        i.putExtra("first", b.getString("first"));
         i.putExtra("last", b.getString("last"));
         i.putExtra("id", b.getString("id"));
         i.putExtra("email", b.getString("email"));
         i.putExtra("line of business", b.getString("line of business"));
         i.putExtra("to teach", b.getBoolean("to teach"));
-
     }
-
 }
