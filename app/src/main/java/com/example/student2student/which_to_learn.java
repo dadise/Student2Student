@@ -39,7 +39,7 @@ public class which_to_learn extends AppCompatActivity {
     import_list importList;
     insert_teach_to_student itts;
     final Context context = this;
-
+    private String sCoursesToLearn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class which_to_learn extends AppCompatActivity {
         if (data == null)
             return;
 
-        final String first, last, ID, email, lob;
+        final String first, last, ID, email, lob, coursesToTeach;
         boolean toTeach;
         first = data.getString("first");
         last = data.getString("last");
@@ -65,6 +65,7 @@ public class which_to_learn extends AppCompatActivity {
         email = data.getString("email");
         lob = data.getString("line of business");
         toTeach = data.getBoolean("to teach");
+        coursesToTeach = data.getString("coursesToTeach");
 
         final TextView change = (TextView) findViewById(R.id.change);
         change.setText("שלום לך " + first + " " + last);
@@ -92,25 +93,25 @@ public class which_to_learn extends AppCompatActivity {
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<courseToTeach> coursesToTeach = new ArrayList<>();
+                ArrayList<courseToTeach> coursesToLearn = new ArrayList<>();
                 courseToTeach ctt = null;
                 for (CourseItem item : coursesList) {
                     if (item.isChecked()) {
-                        coursesToTeach.add(new courseToTeach(ID, item.getCourseName()));
+                        coursesToLearn.add(new courseToTeach(ID, item.getCourseName()));
                     }
                 }
 
-                if (coursesToTeach.size() > 3) {
+                if (coursesToLearn.size() > 3) {
                     Toast.makeText(which_to_learn.this, "Please choose maximum 3 courses!", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if(coursesToTeach.size() == 0)
-                {
+                if (coursesToLearn.size() == 0) {
                     Toast.makeText(which_to_learn.this, "Please choose at least one course!", Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                itts = new insert_teach_to_student(insert_teach_to_student.IS_LEARN,ID, coursesToTeach, getApplicationContext(), getTaskId());
+                sCoursesToLearn = which_to_teach.getCoursesToUpdate(coursesToLearn);
+                itts = new insert_teach_to_student(insert_teach_to_student.IS_LEARN, ID, getApplicationContext(), getTaskId());
                 itts.setInterface(new StringQueryInterface() {
                     @Override
                     public void onSuccess(String response) {
@@ -122,7 +123,7 @@ public class which_to_learn extends AppCompatActivity {
 
                     }
                 });
-                itts.execute(ctt);
+                itts.execute(sCoursesToLearn);
                 Intent intent = new Intent(context, result.class);
                 put(intent, data);
                 startActivity(intent);
@@ -137,5 +138,10 @@ public class which_to_learn extends AppCompatActivity {
         i.putExtra("email", b.getString("email"));
         i.putExtra("line of business", b.getString("line of business"));
         i.putExtra("to teach", b.getBoolean("to teach"));
+
+        i.putExtra("coursesToTeach", b.getString("coursesToTeach"));
+        Log.e("sss", "IM-IN-TOLEARN:" + b.getString("coursesToTeach"));
+
+        i.putExtra("coursesToLearn", sCoursesToLearn);
     }
 }

@@ -16,7 +16,7 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class insert_teach_to_student extends AsyncTask<courseToTeach, Integer, Void> {
+public class insert_teach_to_student extends AsyncTask<String, Integer, Void> {
     //    private final Activity activity;
     public static final String IS_TEACH = "isTeach", IS_LEARN = "isLearn";
     private final Context context;
@@ -27,12 +27,10 @@ public class insert_teach_to_student extends AsyncTask<courseToTeach, Integer, V
     String USER = "bjqdlncpsginpfvs";
     String PASS = "BJeASLFDyGpkwA5dzbmJkWFsfwvF7KVGngwtuUhzXiS2q3oqspfHbpFMcUvuqaEW";
     private StringQueryInterface queryInterface;
-    private ArrayList<courseToTeach> coursesToTeach;
     private String studentID;
     private String type;
 
-    public insert_teach_to_student(String type, String ID, ArrayList<courseToTeach> ctt, Context context, int brenchid) {
-        this.coursesToTeach = ctt;
+    public insert_teach_to_student(String type, String ID,Context context, int brenchid) {
         this.type = type;
         this.context = context;
         this.brenchid = brenchid;
@@ -41,7 +39,7 @@ public class insert_teach_to_student extends AsyncTask<courseToTeach, Integer, V
 
 
     @Override
-    protected Void doInBackground(courseToTeach... params) {
+    protected Void doInBackground(String... params) {
 
         String response = "";
 
@@ -53,13 +51,15 @@ public class insert_teach_to_student extends AsyncTask<courseToTeach, Integer, V
 
             Statement st = con.createStatement();
 
-            String coursesToUpdate = "";
-            for (int i = 0; i < coursesToTeach.size(); i++) {
-                coursesToUpdate += coursesToTeach.get(i).getCourse();
-                if (i < coursesToTeach.size() - 1) {
-                    coursesToUpdate += "#";
-                }
-            }
+
+            String coursesToUpdate = params[0];
+//            String coursesToUpdate = "";
+//            for (int i = 0; i < coursesToTeach.size(); i++) {
+//                coursesToUpdate += coursesToTeach.get(i).getCourse();
+//                if (i < coursesToTeach.size() - 1) {
+//                    coursesToUpdate += "#";
+//                }
+//            }
 
             if (type.equals(IS_TEACH)) {
                 query = "update students set teach='" + coursesToUpdate + "' where studentID ='" + studentID + "'";

@@ -33,21 +33,12 @@ public class which_to_teach extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private CourseListAdapter listAdapter;
     private ArrayList<CourseItem> coursesList;
-
     private Button btnOK;
-    //insert_student is;
-    import_list importList;
-    insert_teach_to_student itts;
-
-    //    ArrayAdapter<String> adapter;
-//    ListView listOfCourse;
-//    ArrayList<String> myItems;
-//    courseToTeach ctt;
-    //    static ArrayList<String> res;
-//    public static android.os.Handler h = new android.os.Handler();
-//    public static Runnable r;
-    final Context context = this;
-
+    private import_list importList;
+    private insert_teach_to_student itts;
+    private ArrayList<courseToTeach> coursesToTeach;
+    private final Context context = this;
+    private String sCoursesToTeach;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +77,6 @@ public class which_to_teach extends AppCompatActivity {
             @Override
             public void onSuccess(ArrayList<CourseItem> response) {
                 coursesList.addAll(response);
-                Log.e("ss", response.toString());
-                Log.e("ss", coursesList.toString());
                 listAdapter.notifyDataSetChanged();
             }
 
@@ -103,10 +92,9 @@ public class which_to_teach extends AppCompatActivity {
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, which_to_learn.class);
-                put(intent, data);
 
-                ArrayList<courseToTeach> coursesToTeach = new ArrayList<>();
+
+                coursesToTeach = new ArrayList<>();
                 courseToTeach ctt = null;
                 for (CourseItem item : coursesList) {
                     if (item.isChecked()) {
@@ -118,13 +106,15 @@ public class which_to_teach extends AppCompatActivity {
                     Toast.makeText(which_to_teach.this, "Please choose maximum 3 courses!", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if(coursesToTeach.size() == 0)
-                {
+                if (coursesToTeach.size() == 0) {
                     Toast.makeText(which_to_teach.this, "Please choose at least one course!", Toast.LENGTH_LONG).show();
                     return;
                 }
+                Log.e("sss","IM-IN-TOTEACH1:"+sCoursesToTeach);
+                sCoursesToTeach = getCoursesToUpdate(coursesToTeach);
+                Log.e("sss","IM-IN-TOTEACH2:"+sCoursesToTeach);
 
-                itts = new insert_teach_to_student(insert_teach_to_student.IS_TEACH,ID, coursesToTeach, getApplicationContext(), getTaskId());
+                itts = new insert_teach_to_student(insert_teach_to_student.IS_TEACH, ID, getApplicationContext(), getTaskId());
                 itts.setInterface(new StringQueryInterface() {
                     @Override
                     public void onSuccess(String response) {
@@ -136,59 +126,15 @@ public class which_to_teach extends AppCompatActivity {
 
                     }
                 });
-                itts.execute(ctt);
+                itts.execute(sCoursesToTeach);
+                Intent intent = new Intent(context, which_to_learn.class);
+                put(intent, data);
                 startActivity(intent);
             }
         });
 
-//        r = new Runnable()
-//        {
-//            @Override
-//            public void run()
-//            {
-//                if(listOfCourse != null)
-//                {
-//                    listOfCourse.setOnItemClickListener(new AdapterView.OnItemClickListener()
-//                    {
-//                        @Override
-//                        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-//                        {
-//                            Log.e("whichToTeach", "here");
-//
-//
-//                        }
-//                    });
-//                }
-//                else
-//                {
-//                    Log.i("ssss","sssssssssss");
-//                }
-//                Log.d("12345", "after");
-//            }
-//        };
-//
-
 
     }
-//
-//    private void filTheList(ArrayList<CourseItem> response) {
-//        myItems = new ArrayList<String>();
-//
-//        Log.e("test", response.toString());
-//        for (int i = 0; i < response.size(); i++) {
-//            Log.e("course", response.get(i));
-//            myItems.add(response.get(i));
-//        }
-//
-//
-//        adapter = new ArrayAdapter<String>(this, R.layout.teachitems, myItems);
-//
-////        h.post(r);
-//        listOfCourse = (ListView) findViewById(R.id.listOfCourses);
-//        listOfCourse.setAdapter(adapter);
-//
-//
-//    }
 
     private void put(Intent i, Bundle b) {
         i.putExtra("first", b.getString("first"));
@@ -197,7 +143,25 @@ public class which_to_teach extends AppCompatActivity {
         i.putExtra("email", b.getString("email"));
         i.putExtra("line of business", b.getString("line of business"));
         i.putExtra("to teach", b.getBoolean("to teach"));
+        i.putExtra("coursesToTeach", sCoursesToTeach);
+
     }
 
+    public static String getCoursesToUpdate(ArrayList<courseToTeach> coursesToTeach) {
+        String coursesToUpdate = "";
+        for (int i = 0; i < coursesToTeach.size(); i++) {
+            coursesToUpdate += coursesToTeach.get(i).getCourse();
+            if (i < coursesToTeach.size() - 1) {
+                coursesToUpdate += "#";
+            }
+        }
+        Log.e("sss","IM-IN-TOTEACH3:"+coursesToUpdate);
+
+        return coursesToUpdate;
+    }
+
+    /*
+    TODO: 06-01 21:58:57.268 1636-1636/com.example.student2student E/sss: IM-IN-TOTEACH:null --- FIXING WHICH TO TEACH
+    */
 
 }

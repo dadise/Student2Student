@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/text1"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceListItemSmall"
-    android:gravity="center_vertical"
-    android:minHeight="?android:attr/listPreferredItemHeightSmall" />
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    android:padding="16dp"
+    tools:context="com.example.student2student.which_to_learn">
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="שם"
+        android:textColor="@color/red"
+        android:textSize="25sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="קורסים"
+        android:id="@+id/course"
+        android:layout_marginRight="15dp"
+        android:layout_toLeftOf="@id/name"
+        android:textColor="@color/red"
+        android:textSize="25sp" />
+
+</RelativeLayout>

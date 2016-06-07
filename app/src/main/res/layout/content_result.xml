@@ -25,12 +25,13 @@
         android:textColor="@color/red"
         android:textStyle="bold"/>
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listOfCourses3"
-        android:layout_below="@+id/resultText"
-        android:layout_centerHorizontal="true" />
+    <android.support.v7.widget.RecyclerView
+
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:id="@+id/recyclerview"
+        android:layout_below="@id/resultText"
+        android:layout_height="wrap_content"/>
 
     <Button
         android:layout_width="wrap_content"
