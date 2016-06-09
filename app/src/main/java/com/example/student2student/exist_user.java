@@ -8,38 +8,65 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.example.student2student.query_task.ImportUserInterface;
+import com.example.student2student.query_task.import_user;
 
 public class exist_user extends AppCompatActivity {
 
-    EditText existUserNameEditText;
+    EditText email;
     EditText password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exist_user);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        existUserNameEditText = (EditText) findViewById(R.id.existUserNameEditText);
-        password = (EditText)findViewById(R.id.passwordEditText);
+        email = (EditText) findViewById(R.id.emailEditText);
+        password = (EditText) findViewById(R.id.passwordEditText);
     }
 
-    public void toResult(View view)
-    {
-        Intent intent = new Intent(this,result.class);
+    public void toResult(View view) {
+        import_user importUser = new import_user(this, getTaskId());
+        importUser.setInterface(new ImportUserInterface() {
+            @Override
+            public void onSuccess(student stud) {
+                Intent intent = new Intent(exist_user.this, result.class);
+                intent.putExtra("first", stud.getFirst());
+                intent.putExtra("last", stud.getLast());
+                intent.putExtra("id", stud.getId());
+                intent.putExtra("email", stud.getEmail());
+                intent.putExtra("line of business",stud.getLob());
+                if(stud.getTeacher().equals("1")) {
+                    intent.putExtra("to teach", true);
+                }
+                else {
+                    intent.putExtra("to teach", false);
+                }
+
+                intent.putExtra("phone", stud.getPhone());
+                intent.putExtra("coursesToTeach", stud.getTeach());
+                intent.putExtra("coursesToLearn", stud.getLearn());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onError(final String err) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(exist_user.this, err, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+        importUser.execute(password.getText().toString(), email.getText().toString());
+    }
+
+    public void toMain(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
-
-    public void toMain(View view)
-    {
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
-    }
-
-//    public void forgotPassword(View view)
-//    {
-//
-//    }
 
 }

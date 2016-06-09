@@ -33,6 +33,7 @@ public class new_user extends AppCompatActivity {
     EditText firstNameInput;
     EditText lastNameInput;
     EditText IDInput;
+    EditText phone;
     EditText emailInput;
     CheckBox isTeach;
     Spinner s;
@@ -58,7 +59,7 @@ public class new_user extends AppCompatActivity {
         emailInput = (EditText) findViewById(R.id.e_mailInput);
         s = (Spinner) findViewById(R.id.line_of_business);
         isTeach = (CheckBox) findViewById(R.id.teatcingCheckBox);
-
+        phone = (EditText) findViewById(R.id.phone);
 
     }
 
@@ -74,7 +75,7 @@ public class new_user extends AppCompatActivity {
         } else {
             teaching = "0";
         }
-        student = new student(firstNameInput.getText().toString(), lastNameInput.getText().toString(), IDInput.getText().toString(), emailInput.getText().toString(), s.getSelectedItem().toString(), teaching, teach, learn, grade);
+        student = new student(firstNameInput.getText().toString(), lastNameInput.getText().toString(), IDInput.getText().toString(), emailInput.getText().toString(), s.getSelectedItem().toString(), teaching, teach, learn, grade,phone.getText().toString());
 
         insertStudent = new insert_student(this, getApplicationContext(), getTaskId());
         insertStudent.setInterface(new ArraylistQueryInterface() {
@@ -137,8 +138,7 @@ public class new_user extends AppCompatActivity {
         i.putExtra("email", email);
         i.putExtra("line of business", lob);
         i.putExtra("to teach", toTeach);
-
-
+        i.putExtra("phone",phone.getText().toString());
     }
 
     public void toMain(View view) {

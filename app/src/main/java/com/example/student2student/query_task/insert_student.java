@@ -58,9 +58,9 @@ public class insert_student extends AsyncTask<student,String,String>{
             }
 
             student s = params[0];
-            Log.i("ssfsdf",s.lob);
+            Log.i("ssfsdf",s.getLob());
 
-            query = "insert into students values('" + s.first + "','" +s.last+ "','"+s.id+"','"+s.email+"','"+s.lob+"','"+s.teacher+"',null,null,null)";
+            query = "insert into students values('" + s.getFirst() + "','" +s.getLast()+ "','"+s.getId()+"','"+s.getEmail()+"','"+s.getLob()+"','"+s.getTeacher()+"',null,null,null,"+s.getPhone()+")";
 //            Log.e("tttttt",query);
 
             st.executeUpdate(query);
@@ -100,7 +100,4 @@ public class insert_student extends AsyncTask<student,String,String>{
 
     }
 
-    //    public void setCallback(ArraylistQueryInterface callback) {
-//        queryInterface = callback;
-//    }
 }

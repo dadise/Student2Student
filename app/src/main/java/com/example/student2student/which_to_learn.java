@@ -57,7 +57,7 @@ public class which_to_learn extends AppCompatActivity {
         if (data == null)
             return;
 
-        final String first, last, ID, email, lob, coursesToTeach;
+        final String first, last, ID, email, lob, coursesToTeach, phone;
         boolean toTeach;
         first = data.getString("first");
         last = data.getString("last");
@@ -66,13 +66,10 @@ public class which_to_learn extends AppCompatActivity {
         lob = data.getString("line of business");
         toTeach = data.getBoolean("to teach");
         coursesToTeach = data.getString("coursesToTeach");
+        phone = data.getString("phone");
 
         final TextView change = (TextView) findViewById(R.id.change);
         change.setText("שלום לך " + first + " " + last);
-        if (first == "" || last == "" || ID == "" || email == "") {
-            Intent intent = new Intent(this, new_user.class);
-            startActivity(intent);
-        }
 
         importList = new import_list(getApplicationContext(), getTaskId());
         importList.setInterface(new ArraylistQueryInterface() {
@@ -127,6 +124,7 @@ public class which_to_learn extends AppCompatActivity {
                 Intent intent = new Intent(context, result.class);
                 put(intent, data);
                 startActivity(intent);
+                finish();
             }
         });
     }
@@ -138,6 +136,7 @@ public class which_to_learn extends AppCompatActivity {
         i.putExtra("email", b.getString("email"));
         i.putExtra("line of business", b.getString("line of business"));
         i.putExtra("to teach", b.getBoolean("to teach"));
+        i.putExtra("phone", b.getString("phone"));
 
         i.putExtra("coursesToTeach", b.getString("coursesToTeach"));
         Log.e("sss", "IM-IN-TOLEARN:" + b.getString("coursesToTeach"));

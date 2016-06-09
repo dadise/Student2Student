@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="שם משתמש "
+        android:text="e_mail"
         android:id="@+id/user_name"
         android:layout_below="@+id/headlineText"
         android:layout_alignParentRight="true"
@@ -35,14 +35,15 @@
         android:textColor="@color/red"/>
 
     <EditText
+        android:layout_marginRight="40dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/existUserNameEditText"
+        android:id="@+id/emailEditText"
         android:layout_toLeftOf="@+id/user_name"
         android:layout_below="@+id/headlineText"
         android:layout_marginTop="10dp"
         android:width="240dp"
-        android:hint="הכנס שם פרטי + שם משפחה"/>
+        android:hint="הכנס כתובת מייל"/>
 
     <ImageView
         android:layout_width="40dp"
@@ -58,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/passwordEditText"
-        android:layout_below="@+id/existUserNameEditText"
+        android:layout_below="@+id/emailEditText"
         android:layout_toLeftOf="@id/imagePassword"
         android:layout_marginRight="40dp"
         android:width="240dp"

@@ -14,156 +14,177 @@
 
 
     <TextView
+        android:id="@+id/headlineText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/headlineText"
-        android:id="@+id/headlineText"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textStyle="bold"
-        android:textColor="@color/red"/>
+        android:text="@string/headlineText"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/red"
+        android:textStyle="bold" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/first_name"
         android:id="@+id/firstName"
-        android:layout_below="@+id/headlineText"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="20dp"
-
-        android:textColor="@color/red"/>
-
-    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/headlineText"
+        android:layout_marginTop="20dp"
+        android:text="@string/first_name"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+
+        android:textColor="@color/red" />
+
+    <EditText
         android:id="@+id/firstNameInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/headlineText"
-        android:layout_toLeftOf="@+id/firstName"
-        android:layout_marginTop="10dp"
         android:layout_marginRight="23dp"
+        android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@+id/firstName"
         android:width="200dp"
-        android:hint="type your first name"/>
+        android:hint="type your first name" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/last_name"
         android:id="@+id/lastNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/firstName"
-        android:layout_alignParentRight="true"
         android:layout_marginTop="20dp"
-        android:textColor="@color/red"/>
+        android:text="@string/last_name"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/red" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/id"
         android:id="@+id/id"
-        android:layout_below="@+id/lastNameText"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/red"/>
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/e_mail"
-        android:id="@+id/Email"
-        android:layout_below="@+id/id"
         android:layout_alignParentRight="true"
+        android:layout_below="@+id/lastNameText"
         android:layout_marginTop="20dp"
-        android:textColor="@color/red"/>
+        android:text="@string/id"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/red" />
+
+    <TextView
+        android:id="@+id/Email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/id"
+        android:layout_marginTop="20dp"
+        android:text="@string/e_mail"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/red" />
 
     <EditText
+        android:id="@+id/lastnameInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lastnameInput"
         android:layout_below="@+id/firstNameInput"
-        android:layout_toLeftOf="@+id/lastNameText"
-        android:width="200dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="0dp"
-        android:hint="type your last name"/>
+        android:layout_toLeftOf="@+id/lastNameText"
+        android:width="200dp"
+        android:hint="type your last name" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/IDInput"
-        android:inputType="number"
-        android:maxLength="9"
-        android:digits="0123456789"
-        android:layout_below="@+id/lastnameInput"
-        android:layout_toLeftOf="@+id/id"
-        android:layout_marginRight="65dp"
-        android:width="200dp"
-        android:hint="type your ID"/>
-
-    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:id="@+id/e_mailInput"
-        android:layout_below="@+id/IDInput"
-        android:layout_toLeftOf="@+id/firstName"
-        android:layout_marginRight="20dp"
+        android:layout_below="@+id/lastnameInput"
+        android:layout_marginRight="65dp"
+        android:layout_toLeftOf="@+id/id"
         android:width="200dp"
-        android:hint="type your e-mail"/>
+        android:digits="0123456789"
+        android:hint="type your ID"
+        android:inputType="number"
+        android:maxLength="9" />
+
+    <EditText
+        android:id="@+id/e_mailInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/IDInput"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/firstName"
+        android:width="200dp"
+        android:ems="10"
+        android:hint="type your e-mail"
+        android:inputType="textEmailAddress" />
+
+
+    <TextView
+        android:id="@+id/phoneText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/Email"
+        android:layout_marginTop="20dp"
+        android:text="@string/phone"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/red" />
+
+    <EditText
+        android:id="@+id/phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/e_mailInput"
+        android:layout_marginRight="45dp"
+        android:layout_toLeftOf="@id/phoneText"
+        android:width="200dp"
+        android:digits="1234567890"
+        android:hint="enter phone number"
+        android:inputType="phone"
+        android:maxLength="10" />
 
 
     <Spinner
+        android:id="@+id/line_of_business"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/line_of_business"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/Email"
+        android:layout_below="@id/phone"
         android:layout_marginTop="30dp"
-        android:layout_marginLeft="20dp"
-        android:entries="@array/line_of_business_list"/>
+        android:entries="@array/line_of_business_list" />
 
     <CheckBox
+        android:id="@+id/teatcingCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/teach_checkBox"
-        android:id="@+id/teatcingCheckBox"
-        android:layout_below="@+id/line_of_business"
         android:layout_alignParentRight="true"
+        android:layout_below="@+id/line_of_business"
         android:layout_marginTop="20dp"
-        android:textColor="@color/red"
-        />
+        android:text="@string/teach_checkBox"
+        android:textColor="@color/red" />
 
     <Button
+        android:id="@+id/ok_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ok_button"
-        android:id="@+id/ok_button"
-        android:textColor="@color/red"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginLeft="40dp"
         android:background="@color/white"
         android:onClick="toWhichToTeach"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="100dp"
-        android:layout_marginLeft="40dp"/>
+        android:text="@string/ok_button"
+        android:textColor="@color/red" />
 
     <Button
+        android:id="@+id/cancel_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/cancel_button"
-        android:id="@+id/cancel_button"
-        android:textColor="@color/red"
-        android:background="@color/white"
-        android:onClick="toMain"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
         android:layout_marginBottom="100dp"
         android:layout_marginLeft="220dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true" />
+        android:background="@color/white"
+        android:onClick="toMain"
+        android:text="@string/cancel_button"
+        android:textColor="@color/red" />
 
 
 </RelativeLayout>

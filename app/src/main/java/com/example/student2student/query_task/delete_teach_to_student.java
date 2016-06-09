@@ -9,24 +9,24 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
-public class delete_teach_to_student extends AsyncTask<courseToTeach,Integer,String> {
-    private final Activity activity;
+public class delete_teach_to_student extends AsyncTask<String, Integer, String> {
+
     private final Context context;
     private int brenchid;
     public String query;
+    private DeleteTeachInterface deleteTeachInterface;
 
     String DB_URL = "jdbc:mysql://a757fb85-09c9-49bc-8772-a58f008e58f6.mysql.sequelizer.com:3306/dba757fb8509c949bc8772a58f008e58f6?useUnicode=yes&characterEncoding=UTF-8";
     String USER = "bjqdlncpsginpfvs";
     String PASS = "BJeASLFDyGpkwA5dzbmJkWFsfwvF7KVGngwtuUhzXiS2q3oqspfHbpFMcUvuqaEW";
 
-    public delete_teach_to_student (Activity activity, Context context, int brenchid) {
-        this.activity = activity;
+    public delete_teach_to_student(Context context, int brenchid) {
         this.context = context;
         this.brenchid = brenchid;
     }
 
     @Override
-    protected String doInBackground(courseToTeach... params) {
+    protected String doInBackground(String... params) {
 
         String response = "";
 
@@ -39,27 +39,28 @@ public class delete_teach_to_student extends AsyncTask<courseToTeach,Integer,Str
 
             Statement st = con.createStatement();
 
-            if (st != null) {
-                Log.i("good4", " statement " + con);
-                Log.i("good4", " statement " + st);
 
-            }
+            String id = params[0];
 
-            courseToTeach ctt = params[0];
-
-            query = "update students set teach=null where studentID ='"+ctt.id+"'";
+            query = "update students set teach=null, isTeach=0 where studentID ='" + id + "'";
 //            update students set teach='שדגדשגשדגשדג' where studentID ='123'
 
             st.executeUpdate(query);
-
-            Log.i("answer", response);
             con.close();
-
+            deleteTeachInterface.onSuccess();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return response;
 
+    }
+
+    public void setInterface(DeleteTeachInterface deleteTeachInterface) {
+        this.deleteTeachInterface = deleteTeachInterface;
+    }
+
+    public interface DeleteTeachInterface {
+        void onSuccess();
     }
 }

@@ -2,9 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:layoutDirection="rtl"
+    android:id="@+id/layout"
     android:padding="16dp"
     tools:context="com.example.student2student.which_to_learn">
 
@@ -14,16 +15,15 @@
         android:layout_height="wrap_content"
         android:text="שם"
         android:textColor="@color/red"
-        android:textSize="25sp" />
-
+        android:textSize="15sp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="קורסים"
         android:id="@+id/course"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="10dp"
         android:layout_toLeftOf="@id/name"
         android:textColor="@color/red"
-        android:textSize="25sp" />
+        android:textSize="15sp" />
 
 </RelativeLayout>

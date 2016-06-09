@@ -3,9 +3,9 @@ package com.example.student2student.query_task;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.ProgressBar;
 
-import com.example.student2student.CourseItem;
 import com.example.student2student.MatchingStudentItem;
 
 import java.sql.Connection;
@@ -25,7 +25,6 @@ public class matching extends AsyncTask<MatchingData, String, ArrayList<Matching
 
     private ArrayList<String> whichToLearn, whichToTeach;
 
-    private int userID;
     String DB_URL = "jdbc:mysql://a757fb85-09c9-49bc-8772-a58f008e58f6.mysql.sequelizer.com:3306/dba757fb8509c949bc8772a58f008e58f6?useUnicode=yes&characterEncoding=UTF-8";
     String USER = "bjqdlncpsginpfvs";
     String PASS = "BJeASLFDyGpkwA5dzbmJkWFsfwvF7KVGngwtuUhzXiS2q3oqspfHbpFMcUvuqaEW";
@@ -47,8 +46,7 @@ public class matching extends AsyncTask<MatchingData, String, ArrayList<Matching
 
     @Override
     protected ArrayList<MatchingStudentItem> doInBackground(MatchingData... params) {
-        progress = ProgressDialog.show(context, "dialog title",
-                "dialog message", true);
+//        progress = ProgressDialog.show(context, "dialog title", "dialog message", true);
 
         listOfMatches = new ArrayList<>();
 
@@ -76,10 +74,11 @@ public class matching extends AsyncTask<MatchingData, String, ArrayList<Matching
                 }
             }
 
-            query = "SELECT firstName,lastName,studentID,studentMail,studentOcc,isTeach,teach,grade,\n" +
-                    "learn= (Select learn FROM students where " + coursesToTeach + ") " +
+            query = "SELECT firstName,lastName,studentID,studentMail,studentOcc,isTeach,teach,grade,phone,\n" +
+                    "learn IN (Select learn FROM students where " + coursesToTeach + ") " +
                     "FROM students " +
-                    "where (studentID !=" + userID + " AND (" + coursesToLearn + ")";
+                    "where (studentID !=" + params[0].getUserID() + " AND (" + coursesToLearn + "))";
+            Log.e("sss",query);
             ResultSet rs = st.executeQuery(query);
 
             while (rs.next()) {
@@ -90,7 +89,7 @@ public class matching extends AsyncTask<MatchingData, String, ArrayList<Matching
                                 rs.getString("studentMail"),
                                 rs.getString("teach"),
                                 rs.getString("grade"),
-                                "000"));
+                                rs.getString("phone")));
             }
             con.close();
 
@@ -104,7 +103,8 @@ public class matching extends AsyncTask<MatchingData, String, ArrayList<Matching
     @Override
     protected void onPostExecute(ArrayList<MatchingStudentItem> strings) {
         super.onPostExecute(strings);
-        progress.dismiss();
+        queryInterface.onSuccess(strings);
+//        progress.dismiss();
     }
 
 
@@ -114,7 +114,7 @@ public class matching extends AsyncTask<MatchingData, String, ArrayList<Matching
     }
 
     public interface MatchingInterface {
-        void onSuccess();
+        void onSuccess(ArrayList<MatchingStudentItem> resultList);
         void onError();
     }
 }

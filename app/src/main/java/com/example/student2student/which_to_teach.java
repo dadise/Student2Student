@@ -56,7 +56,7 @@ public class which_to_teach extends AppCompatActivity {
         if (data == null)
             return;
 
-        final String first, last, ID, email, lob;
+        final String first, last, ID, email, lob, phone;
         boolean toTeach;
         first = data.getString("first");
         last = data.getString("last");
@@ -64,13 +64,11 @@ public class which_to_teach extends AppCompatActivity {
         email = data.getString("email");
         lob = data.getString("line of business");
         toTeach = data.getBoolean("to teach");
+        phone = data.getString("phone");
+
 
         final TextView change = (TextView) findViewById(R.id.change);
         change.setText("שלום לך " + first + " " + last);
-        if (first == "" || last == "" || ID == "" || email == "") {
-            Intent intent = new Intent(this, new_user.class);
-            startActivity(intent);
-        }
 
         importList = new import_list(getApplicationContext(), getTaskId());
         importList.setInterface(new ArraylistQueryInterface() {
@@ -130,6 +128,7 @@ public class which_to_teach extends AppCompatActivity {
                 Intent intent = new Intent(context, which_to_learn.class);
                 put(intent, data);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -144,6 +143,7 @@ public class which_to_teach extends AppCompatActivity {
         i.putExtra("line of business", b.getString("line of business"));
         i.putExtra("to teach", b.getBoolean("to teach"));
         i.putExtra("coursesToTeach", sCoursesToTeach);
+        i.putExtra("phone",b.getString("phone"));
 
     }
 
@@ -155,13 +155,8 @@ public class which_to_teach extends AppCompatActivity {
                 coursesToUpdate += "#";
             }
         }
-        Log.e("sss","IM-IN-TOTEACH3:"+coursesToUpdate);
-
         return coursesToUpdate;
     }
 
-    /*
-    TODO: 06-01 21:58:57.268 1636-1636/com.example.student2student E/sss: IM-IN-TOTEACH:null --- FIXING WHICH TO TEACH
-    */
 
 }

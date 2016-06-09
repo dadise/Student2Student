@@ -9,8 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
-public class delete_learn_to_student extends AsyncTask<courseToTeach,Integer,String> {
-    private final Activity activity;
+public class delete_learn_to_student extends AsyncTask<String,Integer,String> {
     private final Context context;
     private int brenchid;
     public String query;
@@ -19,14 +18,13 @@ public class delete_learn_to_student extends AsyncTask<courseToTeach,Integer,Str
     String USER = "bjqdlncpsginpfvs";
     String PASS = "BJeASLFDyGpkwA5dzbmJkWFsfwvF7KVGngwtuUhzXiS2q3oqspfHbpFMcUvuqaEW";
 
-    public delete_learn_to_student (Activity activity, Context context, int brenchid) {
-        this.activity = activity;
+    public delete_learn_to_student (Context context, int brenchid) {
         this.context = context;
         this.brenchid = brenchid;
     }
 
     @Override
-    protected String doInBackground(courseToTeach... params) {
+    protected String doInBackground(String... params) {
 
         String response = "";
 
@@ -45,9 +43,9 @@ public class delete_learn_to_student extends AsyncTask<courseToTeach,Integer,Str
 
             }
 
-            courseToTeach ctt = params[0];
+            String id = params[0];
 
-            query = "update students set learn=null where studentID ='"+ctt.id+"'";
+            query = "update students set learn=null where studentID ='"+id+"'";
 //            update students set teach='שדגדשגשדגשדג' where studentID ='123'
 
             st.executeUpdate(query);

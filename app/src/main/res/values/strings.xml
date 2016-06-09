@@ -10,6 +10,7 @@
     <string name="last_name"> שם משפחה </string>
     <string name="id"> ת.ז </string>
     <string name="e_mail">e_mail</string>
+    <string name="phone">טלפון</string>
     <string name="teach_checkBox">האם ברצונך ללמד</string>
     <string name="ok_button">ok</string>
     <string name="cancel_button">cancel</string>
