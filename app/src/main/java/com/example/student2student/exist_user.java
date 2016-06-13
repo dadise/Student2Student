@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ public class exist_user extends AppCompatActivity {
         importUser.setInterface(new ImportUserInterface() {
             @Override
             public void onSuccess(student stud) {
+                Log.e("sss",stud.toString());
                 Intent intent = new Intent(exist_user.this, result.class);
                 intent.putExtra("first", stud.getFirst());
                 intent.putExtra("last", stud.getLast());

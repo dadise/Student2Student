@@ -37,6 +37,7 @@
         android:textColor="@color/red" />
 
     <EditText
+        android:maxLength="19"
         android:id="@+id/firstNameInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -81,6 +82,7 @@
         android:textColor="@color/red" />
 
     <EditText
+        android:maxLength="19"
         android:id="@+id/lastnameInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -113,6 +115,7 @@
         android:layout_toLeftOf="@+id/firstName"
         android:width="200dp"
         android:ems="10"
+        android:maxLength="45"
         android:hint="type your e-mail"
         android:inputType="textEmailAddress" />
 

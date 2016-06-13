@@ -68,6 +68,7 @@ public class insert_teach_to_student extends AsyncTask<String, Integer, Void> {
             }
 //            update students set teach='שדגדשגשדגשדג' where studentID ='123'
 
+Log.e("sss","q="+query);
             st.executeUpdate(query);
             con.close();
 

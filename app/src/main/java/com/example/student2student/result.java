@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.student2student.query_task.ArraylistQueryInterface;
 import com.example.student2student.query_task.MatchingData;
@@ -32,16 +33,17 @@ public class result extends AppCompatActivity {
     private matching match;
     private MatchingData matchingData;
     private String userID;
+    private Bundle data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        final Bundle data = getIntent().getExtras();
+        data = getIntent().getExtras();
         if (data == null)
             return;
-        final String first, last, ID, email, coursesToTeach, coursesToLearn;
+        final String first, last, ID, email, coursesToTeach, coursesToLearn, lob;
         boolean toTeach;
         ID = data.getString("id");
         userID = ID;
@@ -49,6 +51,7 @@ public class result extends AppCompatActivity {
         last = data.getString("last");
         email = data.getString("email");
         toTeach = data.getBoolean("to teach");
+        lob = data.getString("line of business");
         coursesToTeach = data.getString("coursesToTeach");
         coursesToLearn = data.getString("coursesToLearn");
 
@@ -80,7 +83,17 @@ public class result extends AppCompatActivity {
             @Override
             public void onSuccess(ArrayList<MatchingStudentItem> resList) {
                 resultList.addAll(resList);
-                listAdapter.notifyDataSetChanged();
+
+                if (resultList.isEmpty()) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(result.this, "No matches found", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } else {
+                    listAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -91,8 +104,6 @@ public class result extends AppCompatActivity {
         match.execute(matchingData);
     }
 
-    //TODO: Call import_list with the right params @ which_to_teach and which_to_learn
-
     public void toWhichToTeach(View view) {
         final Activity activity = this;
         new AlertDialog.Builder(this)
@@ -100,6 +111,7 @@ public class result extends AppCompatActivity {
                 .setPositiveButton("כן", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(activity, which_to_teach.class);
+                        put(intent, data);
                         startActivity(intent);
                         activity.finish();
                     }
@@ -111,6 +123,7 @@ public class result extends AppCompatActivity {
                             @Override
                             public void onSuccess() {
                                 Intent intent = new Intent(activity, which_to_learn.class);
+                                put(intent, data);
                                 startActivity(intent);
                                 activity.finish();
                             }
@@ -133,6 +146,16 @@ public class result extends AppCompatActivity {
     public void toMain(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    private void put(Intent i, Bundle b) {
+        i.putExtra("first", b.getString("first"));
+        i.putExtra("last", b.getString("last"));
+        i.putExtra("id", b.getString("id"));
+        i.putExtra("email", b.getString("email"));
+        i.putExtra("line of business", b.getString("line of business"));
+        i.putExtra("to teach", b.getBoolean("to teach"));
+        i.putExtra("phone", b.getString("phone"));
     }
 
 

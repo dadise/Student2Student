@@ -61,6 +61,19 @@ public class import_user extends AsyncTask<String, String, student> {
             int count = 0;
             rs.next();
 
+
+            String teach = rs.getString("teach");
+            if (teach==null)
+                teach="nothing";
+
+            String learn = rs.getString("learn");
+            if (learn==null)
+                learn="nothing";
+
+            String grade = rs.getString("grade");
+            if (grade==null)
+                grade="0";
+
             stud = new student(
                     rs.getString("firstName"),
                     rs.getString("lastName"),
@@ -68,9 +81,9 @@ public class import_user extends AsyncTask<String, String, student> {
                     rs.getString("studentMail"),
                     rs.getString("studentOcc"),
                     rs.getString("isTeach"),
-                    rs.getString("teach"),
-                    rs.getString("learn"),
-                    rs.getString("grade"),
+                    teach,
+                    learn,
+                    grade,
                     rs.getString("phone"));
 
             con.close();

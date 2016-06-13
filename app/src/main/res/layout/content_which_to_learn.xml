@@ -44,10 +44,11 @@
 
         <android.support.v7.widget.RecyclerView
             android:layout_marginTop="15dp"
+            android:layout_above="@id/ok_button"
             android:layout_width="match_parent"
             android:id="@+id/recyclerview"
             android:layout_below="@id/headline"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"/>
 
 
 

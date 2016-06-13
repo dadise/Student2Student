@@ -104,4 +104,22 @@ public class student {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    @Override
+    public String toString() {
+        String str = "";
+
+        str += first;
+        str += "\t" + last;
+        str += "\t" + id;
+        str += "\t" + email;
+        str += "\t" + lob;
+        str += "\t" + teacher;
+        str += "\t" + teach;
+        str += "\t" + learn;
+        str += "\t" + grade;
+        str += "\t" + phone;
+
+        return str;
+    }
 }

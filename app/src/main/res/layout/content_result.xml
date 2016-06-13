@@ -25,13 +25,6 @@
         android:textColor="@color/red"
         android:textStyle="bold"/>
 
-    <android.support.v7.widget.RecyclerView
-
-        android:layout_marginTop="15dp"
-        android:layout_width="match_parent"
-        android:id="@+id/recyclerview"
-        android:layout_below="@id/resultText"
-        android:layout_height="wrap_content"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -50,7 +43,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="הבייתה"
+        android:text="דרג"
         android:id="@+id/mainButton"
         android:background="@color/white"
         android:textColor="@color/red"
@@ -59,7 +52,17 @@
         android:layout_marginBottom="40dp"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="160dp"
-        android:onClick="toMain"/>
+        android:onClick="gradeUser"/>
+
+    <android.support.v7.widget.RecyclerView
+
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:id="@+id/recyclerview"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@id/resultText"
+        android:layout_above="@id/updateButton"
+        android:layout_height="match_parent"/>
 
 
 </RelativeLayout>

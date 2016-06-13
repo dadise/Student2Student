@@ -122,6 +122,7 @@ public class which_to_learn extends AppCompatActivity {
                 });
                 itts.execute(sCoursesToLearn);
                 Intent intent = new Intent(context, result.class);
+                Log.e("sss", data.toString() + "\t sCoursesToLearn=" + sCoursesToLearn);
                 put(intent, data);
                 startActivity(intent);
                 finish();
@@ -138,7 +139,11 @@ public class which_to_learn extends AppCompatActivity {
         i.putExtra("to teach", b.getBoolean("to teach"));
         i.putExtra("phone", b.getString("phone"));
 
-        i.putExtra("coursesToTeach", b.getString("coursesToTeach"));
+        if (b.getString("coursesToTeach") == null) {
+            i.putExtra("coursesToTeach", "nothing");
+        } else {
+            i.putExtra("coursesToTeach", b.getString("coursesToTeach"));
+        }
         Log.e("sss", "IM-IN-TOLEARN:" + b.getString("coursesToTeach"));
 
         i.putExtra("coursesToLearn", sCoursesToLearn);

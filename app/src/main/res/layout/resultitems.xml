@@ -9,21 +9,36 @@
     android:padding="16dp"
     tools:context="com.example.student2student.which_to_learn">
 
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="שם"
-        android:textColor="@color/red"
-        android:textSize="15sp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="קורסים"
-        android:id="@+id/course"
-        android:layout_marginRight="10dp"
-        android:layout_toLeftOf="@id/name"
-        android:textColor="@color/red"
-        android:textSize="15sp" />
+    <LinearLayout
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="שם"
+            android:textColor="@color/red"
+            android:textSize="15sp" />
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="קורסים"
+            android:id="@+id/course"
+            android:textColor="@color/red"
+            android:textSize="15sp" />
+
+
+    </LinearLayout>
+
+     <View android:layout_height="1dp"
+         android:layout_marginTop="5dp"
+         android:background="@color/red"
+         android:layout_below="@id/text"
+         android:layout_width="match_parent"/>
 
 </RelativeLayout>

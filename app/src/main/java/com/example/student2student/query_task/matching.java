@@ -77,21 +77,22 @@ public class matching extends AsyncTask<MatchingData, String, ArrayList<Matching
             query = "SELECT firstName,lastName,studentID,studentMail,studentOcc,isTeach,teach,grade,phone,\n" +
                     "learn IN (Select learn FROM students where " + coursesToTeach + ") " +
                     "FROM students " +
-                    "where (studentID !=" + params[0].getUserID() + " AND (" + coursesToLearn + "))";
+                    "where (studentID !=" + params[0].getUserID() + " AND (" + coursesToLearn + ") and isTeach!=0)";
             Log.e("sss",query);
             ResultSet rs = st.executeQuery(query);
-
-            while (rs.next()) {
-                listOfMatches.add(
-                        new MatchingStudentItem(
-                                rs.getString("firstName"),
-                                rs.getString("lastName"),
-                                rs.getString("studentMail"),
-                                rs.getString("teach"),
-                                rs.getString("grade"),
-                                rs.getString("phone")));
+            if(rs != null) {
+                while (rs.next()) {
+                    listOfMatches.add(
+                            new MatchingStudentItem(
+                                    rs.getString("firstName"),
+                                    rs.getString("lastName"),
+                                    rs.getString("studentMail"),
+                                    rs.getString("teach"),
+                                    rs.getString("grade"),
+                                    rs.getString("phone")));
+                }
             }
-            con.close();
+                con.close();
 
         } catch (Exception e) {
             e.printStackTrace();
