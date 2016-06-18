@@ -1,6 +1,7 @@
 package com.example.student2student;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ public class which_to_learn extends AppCompatActivity {
     insert_teach_to_student itts;
     final Context context = this;
     private String sCoursesToLearn;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,12 +79,20 @@ public class which_to_learn extends AppCompatActivity {
             public void onSuccess(ArrayList<CourseItem> response) {
                 coursesList.addAll(response);
                 listAdapter.notifyDataSetChanged();
+                if(progressDialog.isShowing()){
+                    progressDialog.dismiss();
+                }
             }
 
             @Override
             public void onError(String errType) {
+                if(progressDialog.isShowing()){
+                    progressDialog.dismiss();
+                }
             }
         });
+        progressDialog = ProgressDialog.show(context, null,
+                "מייבא קורסים", true);
         importList.execute(lob);
 
 
@@ -112,7 +122,6 @@ public class which_to_learn extends AppCompatActivity {
                 itts.setInterface(new StringQueryInterface() {
                     @Override
                     public void onSuccess(String response) {
-                        Log.e("another", response.toString());
                     }
 
                     @Override
@@ -122,7 +131,6 @@ public class which_to_learn extends AppCompatActivity {
                 });
                 itts.execute(sCoursesToLearn);
                 Intent intent = new Intent(context, result.class);
-                Log.e("sss", data.toString() + "\t sCoursesToLearn=" + sCoursesToLearn);
                 put(intent, data);
                 startActivity(intent);
                 finish();
@@ -144,7 +152,6 @@ public class which_to_learn extends AppCompatActivity {
         } else {
             i.putExtra("coursesToTeach", b.getString("coursesToTeach"));
         }
-        Log.e("sss", "IM-IN-TOLEARN:" + b.getString("coursesToTeach"));
 
         i.putExtra("coursesToLearn", sCoursesToLearn);
     }

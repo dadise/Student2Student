@@ -1,6 +1,7 @@
 package com.example.student2student;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ public class which_to_teach extends AppCompatActivity {
     private ArrayList<courseToTeach> coursesToTeach;
     private final Context context = this;
     private String sCoursesToTeach;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,19 +72,28 @@ public class which_to_teach extends AppCompatActivity {
         final TextView change = (TextView) findViewById(R.id.change);
         change.setText("שלום לך " + first + " " + last);
 
+
         importList = new import_list(getApplicationContext(), getTaskId());
         importList.setInterface(new ArraylistQueryInterface() {
             @Override
             public void onSuccess(ArrayList<CourseItem> response) {
                 coursesList.addAll(response);
                 listAdapter.notifyDataSetChanged();
+                if(progressDialog.isShowing()){
+                    progressDialog.dismiss();
+                }
             }
 
             @Override
             public void onError(String errType) {
-                Log.d("error whichToTeach", "22222");
+                if(progressDialog.isShowing()){
+                    progressDialog.dismiss();
+                }
             }
         });
+
+        progressDialog = ProgressDialog.show(context, null,
+                "מייבא קורסים", true);
         importList.execute(lob);
 
 
@@ -144,7 +155,6 @@ public class which_to_teach extends AppCompatActivity {
         i.putExtra("to teach", b.getBoolean("to teach"));
         i.putExtra("coursesToTeach", sCoursesToTeach);
         i.putExtra("phone",b.getString("phone"));
-
     }
 
     public static String getCoursesToUpdate(ArrayList<courseToTeach> coursesToTeach) {

@@ -89,7 +89,7 @@ public class ResultListAdapter extends RecyclerView.Adapter<ResultListAdapter.Vi
                                         i.putExtra(Intent.EXTRA_SUBJECT, "Hi, I want to learn from you");
                                         i.putExtra(Intent.EXTRA_TEXT, "Hi,\n My name is "+first +
                                                 ", and I would like to learn from you.\n" +
-                                                "please contact me at: "+email+"\nThank you!");
+                                                "please contact me at: "+email+"\nThank you!\n\n -This message sent from Student2Student");
                                         try {
                                             ctx.startActivity(Intent.createChooser(i, "Send mail..."));
                                         } catch (android.content.ActivityNotFoundException ex) {

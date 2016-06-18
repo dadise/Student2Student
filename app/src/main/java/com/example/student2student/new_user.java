@@ -39,7 +39,7 @@ public class new_user extends AppCompatActivity {
     Spinner s;
     student student;
     private Context context;
-    String teaching = "", teach = "", learn = "", grade = "";
+    String teaching = "", teach = "nothing", learn = "nothing", grade = "";
     String first, last, id, email, lob;
     boolean toTeach;
 
@@ -102,7 +102,6 @@ public class new_user extends AppCompatActivity {
             }
         });
         insertStudent.execute(student);
-
     }
 
     private void moveToNextActivity() {

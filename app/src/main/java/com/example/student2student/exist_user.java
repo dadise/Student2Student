@@ -33,17 +33,17 @@ public class exist_user extends AppCompatActivity {
         importUser.setInterface(new ImportUserInterface() {
             @Override
             public void onSuccess(student stud) {
-                Log.e("sss",stud.toString());
+                Log.e("sss", stud.toString());
                 Intent intent = new Intent(exist_user.this, result.class);
                 intent.putExtra("first", stud.getFirst());
                 intent.putExtra("last", stud.getLast());
                 intent.putExtra("id", stud.getId());
                 intent.putExtra("email", stud.getEmail());
-                intent.putExtra("line of business",stud.getLob());
-                if(stud.getTeacher().equals("1")) {
+                intent.putExtra("line of business", stud.getLob());
+                intent.putExtra("grade", stud.getGrade());
+                if (stud.getTeacher().equals("1")) {
                     intent.putExtra("to teach", true);
-                }
-                else {
+                } else {
                     intent.putExtra("to teach", false);
                 }
 
@@ -63,7 +63,11 @@ public class exist_user extends AppCompatActivity {
                 });
             }
         });
-        importUser.execute(password.getText().toString(), email.getText().toString());
+        if (password.getText().toString().length() < 9) {
+            Toast.makeText(exist_user.this, "ID is too short", Toast.LENGTH_SHORT).show();
+        } else {
+            importUser.execute(password.getText().toString(), email.getText().toString());
+        }
     }
 
     public void toMain(View view) {

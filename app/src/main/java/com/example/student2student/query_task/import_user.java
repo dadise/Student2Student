@@ -72,7 +72,7 @@ public class import_user extends AsyncTask<String, String, student> {
 
             String grade = rs.getString("grade");
             if (grade==null)
-                grade="0";
+                grade="0#0";
 
             stud = new student(
                     rs.getString("firstName"),

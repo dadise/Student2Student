@@ -1,6 +1,7 @@
 package com.example.student2student.query_task;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -77,7 +78,6 @@ public class import_list extends AsyncTask<String, String, ArrayList<CourseItem>
     @Override
     protected void onPostExecute(ArrayList<CourseItem> strings) {
         super.onPostExecute(strings);
-
         if (strings == null) {
             queryInterface.onError(null);
         } else {

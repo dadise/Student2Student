@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:digits="1234567890"
+        android:maxLength="9"
+        android:inputType="number"
+        android:gravity="center"
+        android:hint="Insert student ID"
+        android:id="@+id/studentID"
+        android:layout_marginBottom="20dp"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+
+    <ImageButton
+        android:id="@+id/star3"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/studentID"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:src="@android:drawable/btn_star_big_off" />
+
+    <ImageButton
+        android:id="@+id/star2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/studentID"
+        android:layout_toLeftOf="@id/star3"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:src="@android:drawable/btn_star_big_off" />
+
+    <ImageButton
+        android:id="@+id/star1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/studentID"
+        android:layout_toLeftOf="@id/star2"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:src="@android:drawable/btn_star_big_off" />
+
+    <ImageButton
+        android:id="@+id/star4"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/studentID"
+        android:layout_toRightOf="@id/star3"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:src="@android:drawable/btn_star_big_off" />
+    <ImageButton
+        android:id="@+id/star5"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/studentID"
+        android:layout_toRightOf="@id/star4"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:src="@android:drawable/btn_star_big_off" />
+
+    <TextView
+        android:textSize="30sp"
+        android:layout_below="@id/star3"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/hiddenGrade"
+        android:layout_width="wrap_content"
+        android:text="0"
+        android:visibility="gone"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

@@ -60,9 +60,11 @@ public class insert_student extends AsyncTask<student,String,String>{
             student s = params[0];
             Log.i("ssfsdf",s.getLob());
 
-            query = "insert into students values('" + s.getFirst() + "','" +s.getLast()+ "','"+s.getId()+"','"+s.getEmail()+"','"+s.getLob()+"','"+s.getTeacher()+"',null,null,null,"+s.getPhone()+")";
+            query = "insert into students values('" + s.getFirst() + "','" +s.getLast()+ "','"+s.getId()+"','"+s.getEmail()+"','"+s.getLob()+"','"+s.getTeacher()+"',null,null,'0#0',"+s.getPhone()+")";
+            //grade initialized to 0#0,
 //            Log.e("tttttt",query);
 
+            Log.e("sss","in insert student"+ query);
             st.executeUpdate(query);
 
             Log.i("answer",response);
