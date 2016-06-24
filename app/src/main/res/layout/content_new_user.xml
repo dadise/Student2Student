@@ -163,6 +163,25 @@
         android:text="@string/teach_checkBox"
         android:textColor="@color/red" />
 
+    <CheckBox
+        android:id="@+id/regulationsCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/teatcingCheckBox"
+        android:layout_marginTop="20dp"
+        android:text="@string/regulationsCheckBox"
+        android:textColor="@color/red" />
+
+    <TextView
+        android:layout_marginRight="3dp"
+        android:textColor="#4096ff"
+        android:layout_alignBaseline="@id/regulationsCheckBox"
+        android:layout_toLeftOf="@id/regulationsCheckBox"
+        android:id="@+id/regulationsText"
+        android:layout_width="wrap_content"
+        android:text="@string/regulationsText"
+        android:layout_height="wrap_content" />
     <Button
         android:id="@+id/ok_button"
         android:layout_width="wrap_content"

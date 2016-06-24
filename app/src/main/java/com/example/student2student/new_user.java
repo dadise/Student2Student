@@ -2,9 +2,11 @@ package com.example.student2student;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -44,6 +47,7 @@ public class new_user extends AppCompatActivity {
     boolean toTeach;
 
     Intent toWhichToTeachIntent, toWhichToLearnIntent;
+    private TextView reg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,22 @@ public class new_user extends AppCompatActivity {
         isTeach = (CheckBox) findViewById(R.id.teatcingCheckBox);
         phone = (EditText) findViewById(R.id.phone);
 
+        reg = (TextView) findViewById(R.id.regulationsText);
+        reg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String msg = "שדגשדג\nשדגדשג\nגהגהגהגה";
+                new AlertDialog.Builder(context)
+                        .setTitle("תקנון")
+                        .setMessage(msg)
+                        .setNeutralButton("בטל", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+            }
+        });
     }
 
     public void toWhichToTeach(View view) {
@@ -75,7 +95,7 @@ public class new_user extends AppCompatActivity {
         } else {
             teaching = "0";
         }
-        student = new student(firstNameInput.getText().toString(), lastNameInput.getText().toString(), IDInput.getText().toString(), emailInput.getText().toString(), s.getSelectedItem().toString(), teaching, teach, learn, grade,phone.getText().toString());
+        student = new student(firstNameInput.getText().toString(), lastNameInput.getText().toString(), IDInput.getText().toString(), emailInput.getText().toString(), s.getSelectedItem().toString(), teaching, teach, learn, grade, phone.getText().toString());
 
         insertStudent = new insert_student(this, getApplicationContext(), getTaskId());
         insertStudent.setInterface(new ArraylistQueryInterface() {
@@ -137,7 +157,7 @@ public class new_user extends AppCompatActivity {
         i.putExtra("email", email);
         i.putExtra("line of business", lob);
         i.putExtra("to teach", toTeach);
-        i.putExtra("phone",phone.getText().toString());
+        i.putExtra("phone", phone.getText().toString());
     }
 
     public void toMain(View view) {

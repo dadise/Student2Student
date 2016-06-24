@@ -12,6 +12,8 @@
     <string name="e_mail">e_mail</string>
     <string name="phone">טלפון</string>
     <string name="teach_checkBox">האם ברצונך ללמד</string>
+    <string name="regulationsCheckBox">האם קראת את</string>
+    <string name="regulationsText">התקנון</string>
     <string name="ok_button">ok</string>
     <string name="cancel_button">cancel</string>
     <string name="user_name"> שם משתמש </string>
