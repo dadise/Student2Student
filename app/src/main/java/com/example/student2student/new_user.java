@@ -36,17 +36,18 @@ public class new_user extends AppCompatActivity {
     EditText firstNameInput;
     EditText lastNameInput;
     EditText IDInput;
-    EditText phone;
+    EditText phoneImput;
     EditText emailInput;
     CheckBox isTeach;
+    CheckBox regulation;
     Spinner s;
     student student;
     private Context context;
-    String teaching = "", teach = "nothing", learn = "nothing", grade = "";
+    String teaching = "", teach = "nothing", learn = "nothing", grade = "",phone ;
     String first, last, id, email, lob;
     boolean toTeach;
 
-    Intent toWhichToTeachIntent, toWhichToLearnIntent;
+    Intent toWhichToTeachIntent, toWhichToLearnIntent,toNewUser;
     private TextView reg;
 
     @Override
@@ -63,15 +64,30 @@ public class new_user extends AppCompatActivity {
         emailInput = (EditText) findViewById(R.id.e_mailInput);
         s = (Spinner) findViewById(R.id.line_of_business);
         isTeach = (CheckBox) findViewById(R.id.teatcingCheckBox);
-        phone = (EditText) findViewById(R.id.phone);
+        regulation = (CheckBox) findViewById(R.id.regulationsCheckBox);
+        phoneImput = (EditText) findViewById(R.id.phone);
 
         reg = (TextView) findViewById(R.id.regulationsText);
         reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String msg = "שדגשדג\nשדגדשג\nגהגהגהגה";
+                String msg = "Student2Student \n" +
+                        "סטודנט לסטודנט \n\n" +
+                        "אפליקציה בשיתוף אגודת הסטודנטים \"עזריאלי - מכללה אקד להנדסה ירושלים\" \n" +
+                        "האפליקציה מציעה שירות לחיפוש מורים פרטיים \n\n" +
+                        "כאשר משתמש נכנס לראשונה לאפליקציה, עליו להזין את פרטיו, לבחור מקצועות אותם ירצה ללמד, לבחור מקצועות אותם ירצה ללמוד והאפליקציה תמצא לו התאמה עם מאגר המורים. \n" +
+                        "כאשר המשתמש מצא מורה שמתאים לו, קיימות שתי דרכי תשלום: \n" +
+                        "1. תשלום של 60 שקלים עבור שעת לימוד.  \n" +
+                        "2. מתן שיעור פרטי, שיעור כנגד שיעור. \n\n" +
+                        "האפליקציה ממיינת את המורים על פי דירוג של הסטודנטים אותם לימדו. \n" +
+                        "בתום כל שיעור על המורה להכנס לחשבונו הפרטי ללחוץ על כפתור הדירוג וכאשר קופץ חלון הדירוג, להעביר את מכשיר הטלפון לסטודנט הלומד. \n" +
+                        "על הסטודנט הלומד להזין את תעודת הזהות שלו בשדה הנדרש ואת דירוג המורה. \n\n" +
+                        "כדי למנוע דירוג חוזר בין חברים \n" +
+                        "לא יהיה ניתן לדרג את המורה שנית!!!!! \n" +
+                        "לכן לפני שמאשרים חייבים להיות בטוחים שזה הדירוג אותו תרצו לתת למורה.\n";
+
                 new AlertDialog.Builder(context)
-                        .setTitle("תקנון")
+                        .setTitle("regulations")
                         .setMessage(msg)
                         .setNeutralButton("בטל", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -90,18 +106,20 @@ public class new_user extends AppCompatActivity {
             return;
         }
 
+        if(phoneImput.getText().toString().equals(""))
+            phoneImput.setText("empty");
         if (isTeach.isChecked()) {
             teaching = "1";
         } else {
             teaching = "0";
         }
-        student = new student(firstNameInput.getText().toString(), lastNameInput.getText().toString(), IDInput.getText().toString(), emailInput.getText().toString(), s.getSelectedItem().toString(), teaching, teach, learn, grade, phone.getText().toString());
+        student = new student(firstNameInput.getText().toString(), lastNameInput.getText().toString(), IDInput.getText().toString(), emailInput.getText().toString(), s.getSelectedItem().toString(), teaching, teach, learn, grade, phoneImput.getText().toString());
 
         insertStudent = new insert_student(this, getApplicationContext(), getTaskId());
         insertStudent.setInterface(new ArraylistQueryInterface() {
             @Override
             public void onSuccess(ArrayList<CourseItem> response) {
-                moveToNextActivity();
+                    moveToNextActivity();
             }
 
             @Override
@@ -121,7 +139,25 @@ public class new_user extends AppCompatActivity {
                 }
             }
         });
-        insertStudent.execute(student);
+        if(regulation.isChecked()) {
+            if(IDInput.length() != 9 ) {
+                Toast.makeText(new_user.this, "enter your full ID number!!", Toast.LENGTH_SHORT).show();
+            }
+            else if(!checkID(IDInput.getText().toString())) {
+                Toast.makeText(new_user.this, "enter your real ID number!!", Toast.LENGTH_SHORT).show();
+            }
+            else
+                insertStudent.execute(student);
+        }
+        else {
+            Toast.makeText(new_user.this, "please read the regulation", Toast.LENGTH_SHORT).show();
+//            stayOnThisActivity();
+        }
+    }
+
+    private void stayOnThisActivity() {
+        toNewUser = new Intent(this,new_user.class);
+        startActivity(toNewUser);
     }
 
     private void moveToNextActivity() {
@@ -130,7 +166,8 @@ public class new_user extends AppCompatActivity {
             put(toWhichToTeachIntent);
             startActivity(toWhichToTeachIntent);
 
-        } else {
+        } else
+        {
             toWhichToLearnIntent = new Intent(this, which_to_learn.class);
             put(toWhichToLearnIntent);
             startActivity(toWhichToLearnIntent);
@@ -157,7 +194,7 @@ public class new_user extends AppCompatActivity {
         i.putExtra("email", email);
         i.putExtra("line of business", lob);
         i.putExtra("to teach", toTeach);
-        i.putExtra("phone", phone.getText().toString());
+        i.putExtra("phone", phoneImput.getText().toString());
     }
 
     public void toMain(View view) {
@@ -165,4 +202,20 @@ public class new_user extends AppCompatActivity {
         startActivity(i);
     }
 
+    public boolean checkID(String idNumber) {
+        int mone = 0;
+        int incNum;
+        for( int i = 0 ; i < 9 ; i++ ) {
+            incNum = Integer.parseInt(String.valueOf(idNumber.charAt(i)));
+            incNum *= ( i % 2 ) + 1;
+            if( incNum > 9 )
+                incNum -= 9;
+            mone += incNum;
+        }
+//        Toast.makeText(new_user.this,  ""+mone % 10 ,Toast.LENGTH_LONG).show();
+        if( mone % 10 == 0 )
+            return true;
+        else
+            return false;
+    }
 }
