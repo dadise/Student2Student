@@ -50,24 +50,14 @@ public class insert_student extends AsyncTask<student,String,String>{
 
             Statement st = con.createStatement();
 
-            if(st != null)
-            {
-                Log.i("good3"," statement " +con);
-                Log.i("good3"," statement " +st);
-
-            }
-
             student s = params[0];
-            Log.i("ssfsdf",s.getLob());
 
             query = "insert into students values('" + s.getFirst() + "','" +s.getLast()+ "','"+s.getId()+"','"+s.getEmail()+"','"+s.getLob()+"','"+s.getTeacher()+"',null,null,'0#0','"+s.getPhone()+"')";
             //grade initialized to 0#0,
 //            Log.e("tttttt",query);
 
-            Log.e("sss","in insert student "+ query);
             st.executeUpdate(query);
 
-            Log.i("answer",response);
             con.close();
 
         }
@@ -92,8 +82,6 @@ public class insert_student extends AsyncTask<student,String,String>{
     @Override
     protected void onProgressUpdate(String... values) {
         super.onProgressUpdate(values);
-
-        Log.i("TAG6", "ist fine!!");
     }
 
     @Override

@@ -33,7 +33,6 @@ public class exist_user extends AppCompatActivity {
         importUser.setInterface(new ImportUserInterface() {
             @Override
             public void onSuccess(student stud) {
-                Log.e("sss", stud.toString());
                 Intent intent = new Intent(exist_user.this, result.class);
                 intent.putExtra("first", stud.getFirst());
                 intent.putExtra("last", stud.getLast());

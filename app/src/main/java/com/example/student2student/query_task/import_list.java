@@ -90,7 +90,6 @@ public class import_list extends AsyncTask<String, String, ArrayList<CourseItem>
     protected void onProgressUpdate(String... values) {
         super.onProgressUpdate(values);
 
-        Log.i("TAG6", "ist fine!!");
     }
 
 //    public void setCallback(ArraylistQueryInterface callback) {

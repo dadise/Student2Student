@@ -3,13 +3,14 @@ package com.example.student2student;
 import java.util.ArrayList;
 
 public class ItemResult {
-    private String name, email, phone, course;
+    private String name, email, phone, course,grade;
 
-    public ItemResult(String name, String email, String phone, String course) {
+    public ItemResult(String name, String email, String phone, String course, String grade) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.course = course;
+        this.grade = grade;
     }
 
     public String getName() {
@@ -42,5 +43,13 @@ public class ItemResult {
 
     public void setCourse(String course) {
         this.course = course;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
     }
 }

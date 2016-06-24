@@ -57,7 +57,16 @@ public class ResultListAdapter extends RecyclerView.Adapter<ResultListAdapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.name.setText(mDataset.get(position).getFirstName() + " " + mDataset.get(position).getLastName() + "\nיכול ללמד");
+        String g = ":"+mDataset.get(position).getGrade().split("\\#")[0].trim();
+        String c = ":"+mDataset.get(position).getGrade().split("\\#")[1].trim();
+
+        String msg ="";
+        if(g.equals(":0"))
+            msg = "\nציונו טרם נקבע";
+        else
+            msg = "\n ציונו "+g+"\n מדרגים "+c;
+
+        holder.name.setText(mDataset.get(position).getFirstName() + " " + mDataset.get(position).getLastName() + "\nיכול ללמד"  +"\n"+ msg);
         String allCourses = mDataset.get(position).getTeach();
         String arr[] = allCourses.split("\\#");
         String canTeach = "";
@@ -65,7 +74,7 @@ public class ResultListAdapter extends RecyclerView.Adapter<ResultListAdapter.Vi
             canTeach += s + "\n";
         }
         holder.course.setText(canTeach);
-        Log.e("sss", "" + mDataset.get(position).getPhone());
+//        Log.e("sss", "" + mDataset.get(position).getPhone());
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

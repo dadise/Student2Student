@@ -41,12 +41,6 @@ public class insert_learn_to_student extends AsyncTask<courseToTeach,Integer,Str
 
             Statement st = con.createStatement();
 
-            if (st != null) {
-                Log.i("good4", " statement " + con);
-                Log.i("good4", " statement " + st);
-
-            }
-
             courseToTeach ctt = params[0];
 
             query = "update students set learn='"+ ctt.course +"' where studentID ='"+ctt.id+"'";
@@ -54,7 +48,6 @@ public class insert_learn_to_student extends AsyncTask<courseToTeach,Integer,Str
 
             st.executeUpdate(query);
 
-            Log.i("answer", response);
             con.close();
 
         } catch (Exception e) {
@@ -72,8 +65,6 @@ public class insert_learn_to_student extends AsyncTask<courseToTeach,Integer,Str
     @Override
     protected void onProgressUpdate(Integer... values) {
         super.onProgressUpdate();
-
-        Log.i("TAG6", "ist fine!!");
     }
 
 

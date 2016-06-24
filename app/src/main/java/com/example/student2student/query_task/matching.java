@@ -78,7 +78,6 @@ public class matching extends AsyncTask<MatchingData, String, ArrayList<Matching
                     "learn IN (Select learn FROM students where " + coursesToTeach + ") " +
                     "FROM students " +
                     "where (studentID !=" + params[0].getUserID() + " AND (" + coursesToLearn + ") and isTeach!=0)";
-            Log.e("sss",query);
             ResultSet rs = st.executeQuery(query);
             if(rs != null) {
                 while (rs.next()) {

@@ -50,14 +50,7 @@ public class is_exist extends AsyncTask<String,String,Boolean>
 
             Statement st = con.createStatement();
 
-            if(st != null)
-            {
-                Log.i("good1", " statement " + con);
-                Log.i("good1"," statement " +st);
-
-            }
             String s = params[0];
-            Log.i("kkkkkk",s);
 
             query = "SELECT firstName FROM students where studentID ='"+s+"'";
 
@@ -66,13 +59,9 @@ public class is_exist extends AsyncTask<String,String,Boolean>
             {
                 response = rs.toString();
             }
-
-
-            Log.i("answer in is exist", String.valueOf(response.length()));
             con.close();
             if(String.valueOf(response.length()) != "0")
             {
-                Log.i("inside",response);
                 is = false;
             }
 
@@ -103,8 +92,6 @@ public class is_exist extends AsyncTask<String,String,Boolean>
     @Override
     protected void onProgressUpdate(String... values) {
         super.onProgressUpdate(values);
-
-        Log.i("TAG6", "ist fine!!");
     }
 
 //    public void setCallback(ArraylistQueryInterface callback) {

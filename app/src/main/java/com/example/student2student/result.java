@@ -64,7 +64,6 @@ public class result extends AppCompatActivity {
         final String first, last, email, coursesToTeach, coursesToLearn, lob;
         boolean toTeach;
         userID = data.getString("id");
-        Log.e("sss", "userID in result top=" + userID);
         first = data.getString("first");
         last = data.getString("last");
         email = data.getString("email");

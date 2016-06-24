@@ -119,9 +119,7 @@ public class which_to_teach extends AppCompatActivity {
                     Toast.makeText(which_to_teach.this, "Please choose at least one course!", Toast.LENGTH_LONG).show();
                     return;
                 }
-                Log.e("sss","IM-IN-TOTEACH1:"+sCoursesToTeach);
                 sCoursesToTeach = getCoursesToUpdate(coursesToTeach);
-                Log.e("sss","IM-IN-TOTEACH2:"+sCoursesToTeach);
 
                 itts = new insert_teach_to_student(insert_teach_to_student.IS_TEACH, ID, getApplicationContext(), getTaskId());
                 itts.setInterface(new StringQueryInterface() {

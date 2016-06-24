@@ -37,12 +37,6 @@ public class delete_learn_to_student extends AsyncTask<String,Integer,String> {
 
             Statement st = con.createStatement();
 
-            if (st != null) {
-                Log.i("good4", " statement " + con);
-                Log.i("good4", " statement " + st);
-
-            }
-
             String id = params[0];
 
             query = "update students set learn=null where studentID ='"+id+"'";
@@ -50,7 +44,6 @@ public class delete_learn_to_student extends AsyncTask<String,Integer,String> {
 
             st.executeUpdate(query);
 
-            Log.i("answer", response);
             con.close();
 
         } catch (Exception e) {
