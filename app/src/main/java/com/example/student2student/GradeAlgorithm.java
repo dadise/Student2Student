@@ -1,5 +1,7 @@
 package com.example.student2student;
 
+import android.util.Log;
+
 public class GradeAlgorithm {
 
     private String grade; //Grade is in the following format: gradeAvrg#numOfGraders

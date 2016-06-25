@@ -42,8 +42,8 @@ public class insert_to_grade_table extends AsyncTask<String, String, String> {
 
             Statement st = con.createStatement();
 
-            String toID = params[0];
-            String fromID = params[1];
+            String fromID = params[0];
+            String toID = params[1];
 
             query = "insert into grade_table values('" + fromID + "','" + toID + "')";
             st.executeUpdate(query);

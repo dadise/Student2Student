@@ -74,7 +74,6 @@ public class ResultListAdapter extends RecyclerView.Adapter<ResultListAdapter.Vi
             canTeach += s + "\n";
         }
         holder.course.setText(canTeach);
-//        Log.e("sss", "" + mDataset.get(position).getPhone());
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

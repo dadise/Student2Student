@@ -36,9 +36,26 @@
         android:textSize="20sp"
         android:textColor="@color/red"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentLeft="true"
         android:background="@color/white"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="100dp"
         android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:text="back"
+        android:id="@+id/back_button"
+        android:textSize="20sp"
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/red"
+        android:layout_toRightOf="@id/ok_button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/white"
+        android:layout_marginRight="100dp"
+        android:layout_height="wrap_content" />
+
 
     <android.support.v7.widget.RecyclerView
         android:layout_marginTop="15dp"

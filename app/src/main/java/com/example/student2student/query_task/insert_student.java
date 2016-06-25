@@ -53,11 +53,8 @@ public class insert_student extends AsyncTask<student,String,String>{
             student s = params[0];
 
             query = "insert into students values('" + s.getFirst() + "','" +s.getLast()+ "','"+s.getId()+"','"+s.getEmail()+"','"+s.getLob()+"','"+s.getTeacher()+"',null,null,'0#0','"+s.getPhone()+"')";
-            //grade initialized to 0#0,
-//            Log.e("tttttt",query);
 
             st.executeUpdate(query);
-
             con.close();
 
         }

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.DialogPreference;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -44,6 +45,7 @@ public class result extends AppCompatActivity {
     private MatchingData matchingData;
     private String userID;
     private Bundle data;
+    private final Context context = this;
 
     private View gradeDialogView;
     private TextView hiddenGrade;
@@ -52,6 +54,8 @@ public class result extends AppCompatActivity {
     private insert_grade_to_student igts;
     private String userToGrade;
     private ProgressDialog progressDialog;
+    private String grade;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +79,7 @@ public class result extends AppCompatActivity {
         if(data.getString("grade") == null){
             findViewById(R.id.gradeBtn).setVisibility(View.INVISIBLE);
         }
+
         String[] temp = coursesToTeach.split("\\#");
         ArrayList<String> toTeachArray = new ArrayList<>();
         for (String s : temp) {
@@ -100,6 +105,7 @@ public class result extends AppCompatActivity {
             @Override
             public void onSuccess(ArrayList<MatchingStudentItem> resList) {
                 //before sorting
+                //// TODO: 22/06/2016 this is where the sorting acure
                 resultList.clear();
                 boolean added = false;
                 for (MatchingStudentItem item : resList) {
@@ -271,8 +277,14 @@ public class result extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(result.this, "Grade successfully updated", Toast.LENGTH_LONG).show();
+
+//                        finish();
+//                        put(getIntent(), data);
+//                        startActivity(getIntent());
+
                     }
                 });
+
             }
 
             @Override
@@ -311,11 +323,12 @@ public class result extends AppCompatActivity {
                         if (toStudentID.getText().toString().length() < 9) {
                             Toast.makeText(result.this, "ID is too short", Toast.LENGTH_LONG).show();
                         }
-                        userToGrade = toStudentID.getText().toString();
-                        if (userToGrade.equals(userID)) {
+                        userToGrade = userID;
+//                        userToGrade = toStudentID.getText().toString();
+                        if (userToGrade.equals(toStudentID.getText().toString())) {
                             Toast.makeText(result.this, "You can't grade yourself!", Toast.LENGTH_LONG).show();
                         } else {
-                            itgt.execute(userToGrade, userID);
+                            itgt.execute(toStudentID.getText().toString(), userID);
                         }
 
                     }
@@ -326,6 +339,7 @@ public class result extends AppCompatActivity {
                     }
                 })
                 .show();
+        getIntent().putExtra("grade",data.getString("grade"));
     }
 
     private void put(Intent i, Bundle b) {
@@ -336,6 +350,30 @@ public class result extends AppCompatActivity {
         i.putExtra("line of business", b.getString("line of business"));
         i.putExtra("to teach", b.getBoolean("to teach"));
         i.putExtra("phone", b.getString("phone"));
+        i.putExtra("grade",b.getString("grade"));
+    }
+
+    private boolean pressTwice = false;
+    @Override
+    public void onBackPressed()
+    {
+        if(pressTwice)
+        {
+            Intent i = new Intent(context, MainActivity.class);
+            startActivity(i);
+            finish();
+
+        }
+        pressTwice = true;
+        Toast.makeText(context, "press BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                pressTwice = false;
+            }
+        }, 2000);
+
     }
 
 

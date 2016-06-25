@@ -3,6 +3,7 @@ package com.example.student2student.query_task;
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -38,8 +39,8 @@ public class insert_grade_to_student extends AsyncTask<String, String, String> {
 
             Statement st = con.createStatement();
 
-
             query = "update students set grade='" + params[0] + "' where studentID='" + params[1] + "'";
+            Log.i("sss4",query);
             st.executeUpdate(query);
 
             con.close();

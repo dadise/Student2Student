@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.student2student.query_task.ArraylistQueryInterface;
 import com.example.student2student.query_task.StringQueryInterface;
 import com.example.student2student.query_task.courseToTeach;
+import com.example.student2student.query_task.delete_student;
 import com.example.student2student.query_task.import_list;
 import com.example.student2student.query_task.insert_student;
 import com.example.student2student.query_task.insert_teach_to_student;
@@ -35,12 +36,15 @@ public class which_to_teach extends AppCompatActivity {
     private CourseListAdapter listAdapter;
     private ArrayList<CourseItem> coursesList;
     private Button btnOK;
+    private Button btnBack;
     private import_list importList;
     private insert_teach_to_student itts;
+    private delete_student ds;
     private ArrayList<courseToTeach> coursesToTeach;
     private final Context context = this;
     private String sCoursesToTeach;
     private ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +105,6 @@ public class which_to_teach extends AppCompatActivity {
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 coursesToTeach = new ArrayList<>();
                 courseToTeach ctt = null;
                 for (CourseItem item : coursesList) {
@@ -141,6 +143,24 @@ public class which_to_teach extends AppCompatActivity {
             }
         });
 
+        btnBack = (Button) findViewById(R.id.back_button);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ds = new delete_student(getApplicationContext(),getTaskId());
+                ds.setInterface(new delete_student.DeleteStudentInterface(){
+                    @Override
+                    public void onSuccess() {
+
+                    }
+                });
+                ds.execute(ID);
+                Intent intent = new Intent(context, new_user.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 
@@ -165,6 +185,7 @@ public class which_to_teach extends AppCompatActivity {
         }
         return coursesToUpdate;
     }
+
 
 
 }
